@@ -65,7 +65,7 @@ abstract class AbstractProcessor implements Processor
             $default
         );
 
-        return $this->getMessageParser()->parse($message, $options);
+        return $this->getMessageParser()->parse($code, $message, $options);
     }
 
     /**

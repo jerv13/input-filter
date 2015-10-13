@@ -8,12 +8,13 @@ namespace JervDesign\InputFilter\Message;
 interface MessageParser
 {
     /**
-     * parseParams
+     * parse
      *
+     * @param string $code
      * @param string $message
      * @param array  $options
      *
-     * @return string
+     * @return mixed
      */
-    public function parse($message, array $options = []);
+    public function parse($code, $message, array $options = []);
 }

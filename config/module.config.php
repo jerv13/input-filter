@@ -8,7 +8,7 @@ return [
     'exampleConfig' => [
         [
             'name' => 'fieldSetName',
-            'processor' => 'JervDesign\InputFilter\FieldSetProcessor',
+            'processor' => 'JervDesign\InputFilter\DataSetProcessor',
             'dataSet' => [
                 [
                     'name' => 'fieldName',
@@ -30,11 +30,11 @@ return [
             'messages' => [
                 '{code}' =>'{messageValue}',
             ],
-//            'messageParams' => [
-//                '{code}' =>[
-//                    '{paramName}' => '{paramValue}'
-//                ],
-//            ],
+            'messageParams' => [
+                '{code}' =>[
+                    '{paramName}' => '{paramValue}'
+                ],
+            ],
         ]
     ],
     'service_manager' => [

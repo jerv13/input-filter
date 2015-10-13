@@ -32,11 +32,11 @@ class MessageParsers implements MessageParser
      *
      * @return string
      */
-    public function parse($message, array $options = [])
+    public function parse($code, $message, array $options = [])
     {
         /** @var MessageParser $messageParser */
         foreach ($this->messageParsers as $messageParser) {
-            $message = $messageParser->parse($message);
+            $message = $messageParser->parse($code, $message, $options);
         }
 
         return $message;

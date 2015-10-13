@@ -8,14 +8,15 @@ namespace JervDesign\InputFilter\Message;
 class DefaultMessageParser implements MessageParser
 {
     /**
-     * parseParams
+     * parse
      *
+     * @param string $code
      * @param string $message
      * @param array  $options
      *
      * @return string
      */
-    public function parse($message, array $options = [])
+    public function parse($code, $message, array $options = [])
     {
         return $message;
     }
