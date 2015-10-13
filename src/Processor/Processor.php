@@ -24,8 +24,9 @@ interface Processor
      *
      * @param string $code
      * @param array  $options
+     * @param null   $default
      *
      * @return string
      */
-    public function getMessage($code, array $options);
+    public function getMessage($code, array $options, $default = null);
 }

@@ -56,9 +56,13 @@ class DataSetProcessor extends AbstractProcessor
         $name = $this->getOption('name', $options, 'default');
         $fieldOptions = $this->getOption('dataSet', $options, []);
 
+        $context = $data;
+
         /** @var Processor $processor */
         foreach ($data as $fieldName => $value) {
             $fieldOption = $this->getOption($fieldName, $fieldOptions, []);
+
+            $fieldOption['context'] = $context;
 
             $processor = $this->getProcessor($fieldOption['processor']);
 
@@ -76,7 +80,11 @@ class DataSetProcessor extends AbstractProcessor
 
         if (!$results->isValid()) {
             $results->setMessage(
-                "Some values for {$name} are invalid"
+                $this->getMessage(
+                    'invalid',
+                    $options,
+                    "Some values for {$name} are invalid"
+                )
             );
         }
 

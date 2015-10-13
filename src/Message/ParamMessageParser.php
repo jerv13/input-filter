@@ -20,7 +20,7 @@ class ParamsMessageParser implements MessageParser
         if (!array_key_exists('messageParams', $options)) {
             return $message;
         }
-        $params = $options['params'];
+        $params = $options['messageParams'];
 
         foreach ($params as $name => $value) {
             $message = str_replace(

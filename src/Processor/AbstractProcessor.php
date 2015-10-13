@@ -14,7 +14,10 @@ abstract class AbstractProcessor implements Processor
     /**
      * string
      */
-    const DEFAULT_MESSAGE = 'Invalid';
+    static $defaultMessages
+        = [
+            'default' => 'Invalid'
+        ];
 
     /**
      * @var MessageParser
@@ -50,13 +53,16 @@ abstract class AbstractProcessor implements Processor
      *
      * @return string
      */
-    public function getMessage($code, array $options)
+    public function getMessage($code, array $options, $default = null)
     {
+        if (empty($default)) {
+            $default = self::$defaultMessages['default'];
+        }
         $messageOptions = $this->getOption('messages', $options, []);
         $message = $this->getOption(
             (string)$code,
             $messageOptions,
-            static::DEFAULT_MESSAGE
+            $default
         );
 
         return $this->getMessageParser()->parse($message, $options);
