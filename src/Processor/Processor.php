@@ -17,5 +17,15 @@ interface Processor
      *
      * @return Result
      */
-    public function process($data, $options = []);
+    public function process($data, array $options = []);
+
+    /**
+     * getMessage
+     *
+     * @param string $code
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function getMessage($code, array $options);
 }

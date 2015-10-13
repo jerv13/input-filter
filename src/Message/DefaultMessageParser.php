@@ -10,13 +10,13 @@ class DefaultMessageParser implements MessageParser
     /**
      * parseParams
      *
-     * @param string $string
+     * @param string $message
      * @param array  $options
      *
      * @return string
      */
-    public function parse($string, $options = [])
+    public function parse($message, array $options = [])
     {
-        return $string;
+        return $message;
     }
 }

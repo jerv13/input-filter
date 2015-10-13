@@ -9,36 +9,32 @@ return [
         [
             'name' => 'fieldSetName',
             'processor' => 'JervDesign\InputFilter\FieldSetProcessor',
-            'fieldSet' => [
+            'dataSet' => [
                 [
                     'name' => 'fieldName',
                     'processor' => 'JervDesign\InputFilter\Processors',
                     'processors' => [
                         [
                             'processor' => 'JervDesign\InputFilter\Processors',
+                            'messages' => [
+                                '{code}' =>'{messageValue}',
+                            ],
                         ]
 
                     ],
                     'messages' => [
-                        [
-                            'code' => 'myCode',
-                            'message' => '{messageValue}',
-                            'params' => [
-                                '{paramName}' => '{paramValue}'
-                            ]
-                        ]
-                    ]
+                        '{code}' =>'{messageValue}',
+                    ],
                 ]
             ],
             'messages' => [
-                [
-                    'code' => 'myCode',
-                    'message' => '{messageValue}',
-                    'params' => [
-                        '{paramName}' => '{paramValue}'
-                    ]
-                ]
-            ]
+                '{code}' =>'{messageValue}',
+            ],
+//            'messageParams' => [
+//                '{code}' =>[
+//                    '{paramName}' => '{paramValue}'
+//                ],
+//            ],
         ]
     ],
     'service_manager' => [

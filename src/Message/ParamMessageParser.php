@@ -10,26 +10,26 @@ class ParamsMessageParser implements MessageParser
     /**
      * parseParams
      *
-     * @param string $string
+     * @param string $message
      * @param array  $options
      *
      * @return string
      */
-    public function parse($string, $options = [])
+    public function parse($message, array $options = [])
     {
-        if (!array_key_exists('params', $options)) {
-            return $string;
+        if (!array_key_exists('messageParams', $options)) {
+            return $message;
         }
         $params = $options['params'];
 
         foreach ($params as $name => $value) {
-            $string = str_replace(
+            $message = str_replace(
                 '{' . $name . '}',
                 $value,
-                $string
+                $message
             );
         }
 
-        return $string;
+        return $message;
     }
 }

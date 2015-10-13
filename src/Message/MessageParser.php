@@ -10,10 +10,10 @@ interface MessageParser
     /**
      * parseParams
      *
-     * @param string $string
-     * @param array $options
+     * @param string $message
+     * @param array  $options
      *
      * @return string
      */
-    public function parse($string, $options = []);
+    public function parse($message, array $options = []);
 }

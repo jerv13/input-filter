@@ -3,6 +3,7 @@
 namespace JervDesign\InputFilter\Processor;
 
 use JervDesign\InputFilter\Result\ProcessorResult;
+use JervDesign\InputFilter\ServiceLocator;
 
 /**
  * Class Processors Composite Processor
@@ -10,20 +11,28 @@ use JervDesign\InputFilter\Result\ProcessorResult;
 class Processors extends AbstractProcessor
 {
     /**
-     * array [Processor]
+     * @var ServiceLocator
      */
-    protected $processors = [];
+    protected $serviceLocator;
 
     /**
-     * add
-     *
-     * @param Processor $processor
-     *
-     * @return void
+     * @param ServiceLocator $serviceLocator
      */
-    public function add(Processor $processor)
+    public function __construct(ServiceLocator $serviceLocator)
     {
-        $this->processors[] = $processor;
+        $this->serviceLocator = $serviceLocator;
+    }
+
+    /**
+     * getProcessor
+     *
+     * @param $serviceName
+     *
+     * @return mixed
+     */
+    public function getProcessor($serviceName)
+    {
+        return $this->serviceLocator->get($serviceName);
     }
 
     /**
@@ -34,16 +43,25 @@ class Processors extends AbstractProcessor
      *
      * @return ProcessorResult
      */
-    public function process($data, $options = [])
+    public function process($data, array $options = [])
     {
         $results = new ProcessorResult();
         $results->setValid(true);
 
         $name = $this->getOption('name', $options, 'default');
 
-        /** @var Processor $processor */
-        foreach ($this->processors as $processor) {
-            $result = $processor->process($data, $options);
+        $processors = $this->getOption('processors', $options, []);
+
+        foreach ($processors as $processorOptions) {
+            $processorServiceName = $this->getOption('processor', $processorOptions, null);
+            /** @var Processor $processor */
+            $processor = $this->getProcessor($processorServiceName);
+
+            // over-ride name
+            $processorOptions['name'] = $name;
+
+            $result = $processor->process($data, $processorOptions);
+
             $data = $result->getValue();
 
             if (!$result->isValid()) {

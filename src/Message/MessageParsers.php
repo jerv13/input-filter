@@ -27,18 +27,18 @@ class MessageParsers implements MessageParser
     /**
      * parseParams
      *
-     * @param string $string
+     * @param string $message
      * @param array  $options
      *
      * @return string
      */
-    public function parse($string, $options = [])
+    public function parse($message, array $options = [])
     {
         /** @var MessageParser $messageParser */
-        foreach($this->messageParsers as $messageParser) {
-            $string = $messageParser->parse($string);
+        foreach ($this->messageParsers as $messageParser) {
+            $message = $messageParser->parse($message);
         }
 
-        return $string;
+        return $message;
     }
 }
