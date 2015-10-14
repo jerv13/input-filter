@@ -12,20 +12,27 @@ use JervDesign\InputFilter\ServiceLocator;
 class DataSetProcessor extends AbstractProcessor
 {
     /**
+     * DEFAULT_CODE
+     */
+    const DEFAULT_CODE = 'dataSetInvalid';
+
+    /**
+     * DEFAULT_CODE
+     */
+    const DEFAULT_MESSAGE = 'Data set is invalid';
+
+    /**
      * @var ServiceLocator
      */
     protected $serviceLocator;
 
     /**
-     * @param ServiceLocator     $serviceLocator
-     * @param MessageParser|null $messageParser
+     * @param ServiceLocator $serviceLocator
      */
     public function __construct(
-        ServiceLocator $serviceLocator,
-        $messageParser = null
+        ServiceLocator $serviceLocator
     ) {
         $this->serviceLocator = $serviceLocator;
-        parent::__construct($messageParser);
     }
 
     /**
@@ -50,13 +57,11 @@ class DataSetProcessor extends AbstractProcessor
      */
     public function process($data, array $options = [])
     {
-        $results = new ProcessorResult();
-        $results->setValid(true);
-
         $name = $this->getOption('name', $options, 'default');
         $fieldOptions = $this->getOption('dataSet', $options, []);
-
         $context = $data;
+
+        $results = new ProcessorResult($name, true);
 
         /** @var Processor $processor */
         foreach ($data as $fieldName => $value) {
@@ -71,22 +76,16 @@ class DataSetProcessor extends AbstractProcessor
             $result->setName($name);
 
             if (!$result->isValid()) {
-                $results->setValid(false);
+                $results->setError(
+                    self::DEFAULT_CODE,
+                    $options,
+                    self::DEFAULT_MESSAGE
+                    );
                 $results->addChild($result);
             }
         }
 
         $results->setValue($data);
-
-        if (!$results->isValid()) {
-            $results->setMessage(
-                $this->getMessage(
-                    'invalid',
-                    $options,
-                    "Some values for {$name} are invalid"
-                )
-            );
-        }
 
         return $results;
     }

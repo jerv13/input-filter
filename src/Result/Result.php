@@ -10,12 +10,43 @@ use JervDesign\InputFilter\Stringable;
  */
 interface Result extends Stringable, Arrayable
 {
+
+    /**
+     * setError
+     * - Sets code and state
+     * - Setting error implies an invalid result
+     * - Builds messages based on options and defaultMessage
+     *
+     * @param string      $code
+     * @param array       $options
+     * @param null|string $defaultMessage
+     *
+     * @return void
+     */
+    public function setError($code, array $options = [], $defaultMessage = null);
+
+    /**
+     * setCode
+     *
+     * @param $code
+     *
+     * @return mixed
+     */
+    public function setCode($code);
+
+    /**
+     * getCode
+     *
+     * @return string
+     */
+    public function getCode();
+
     /**
      * setName
      *
      * @param string $name
      *
-     * @return mixed
+     * @return void
      */
     public function setName($name);
 
@@ -47,7 +78,7 @@ interface Result extends Stringable, Arrayable
      *
      * @param string $message
      *
-     * @return mixed
+     * @return void
      */
     public function setMessage($message);
 

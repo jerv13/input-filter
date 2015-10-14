@@ -10,6 +10,11 @@ abstract class AbstractResult implements Result
     /**
      * @var string
      */
+    protected $code = '';
+
+    /**
+     * @var string
+     */
     protected $name = 'default';
 
     /**
@@ -31,6 +36,92 @@ abstract class AbstractResult implements Result
      * @var array
      */
     protected $children = [];
+
+    /**
+     * @param           $name
+     * @param bool|true $valid
+     */
+    public function __construct($name, $valid = true)
+    {
+        $this->setName($name);
+        $this->setValid($valid);
+    }
+
+    /**
+     * setError
+     * - Sets code and state
+     * - Setting a code creates an invalid result
+     *
+     * @param string      $code
+     * @param array       $options
+     * @param null|string $defaultMessage
+     *
+     * @return void
+     */
+    public function setError($code, array $options = [], $defaultMessage = 'Invalid')
+    {
+        $this->setValid(false);
+        $this->setCode((string)$code);
+        $defaultMessage = (string)$defaultMessage;
+
+        if (empty($defaultMessage)) {
+            $defaultMessage = 'Invalid';
+        }
+
+        if (!array_key_exists('messages', $options)) {
+            $this->setMessage($defaultMessage);
+
+            return;
+        }
+
+        if (!array_key_exists($options['messages'][$code], $options)) {
+            $this->setMessage($defaultMessage);
+
+            return;
+        }
+
+        $this->setMessage($options['messages'][$code]);
+    }
+
+    /**
+     * setSuccess
+     * - Sets value, code and state
+     * - Setting a code creates a valid result
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function setSuccess($value)
+    {
+        $this->setValid(true);
+        $this->setCode('');
+        $this->setMessage('');
+    }
+
+    /**
+     * setCode
+     *
+     * @param string $code
+     *
+     * @return void
+     */
+    public function setCode($code)
+    {
+        $code = (string)$code;
+
+        $this->code = $code;
+    }
+
+    /**
+     * getCode
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
 
     /**
      * setName

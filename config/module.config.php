@@ -4,6 +4,7 @@ return [
      * Configuration
      */
     'JervDesign\\InputFilter' => [
+        'messageParsers' => [],
     ],
     'exampleConfig' => [
         [

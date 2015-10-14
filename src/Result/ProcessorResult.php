@@ -7,5 +7,4 @@ namespace JervDesign\InputFilter\Result;
  */
 class ProcessorResult extends AbstractResult
 {
-
 }

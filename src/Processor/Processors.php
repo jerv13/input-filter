@@ -11,6 +11,16 @@ use JervDesign\InputFilter\ServiceLocator;
 class Processors extends AbstractProcessor
 {
     /**
+     * DEFAULT_CODE
+     */
+    const DEFAULT_CODE = 'processorsInvalid';
+
+    /**
+     * DEFAULT_CODE
+     */
+    const DEFAULT_MESSAGE = 'Data is invalid';
+
+    /**
      * @var ServiceLocator
      */
     protected $serviceLocator;
@@ -45,12 +55,10 @@ class Processors extends AbstractProcessor
      */
     public function process($data, array $options = [])
     {
-        $results = new ProcessorResult();
-        $results->setValid(true);
-
         $name = $this->getOption('name', $options, 'default');
-
         $processors = $this->getOption('processors', $options, []);
+
+        $results = new ProcessorResult($name, true);
 
         foreach ($processors as $processorOptions) {
             $processorServiceName = $this->getOption('processor', $processorOptions, null);
@@ -65,19 +73,16 @@ class Processors extends AbstractProcessor
             $data = $result->getValue();
 
             if (!$result->isValid()) {
-                $results->setValid(false);
+                $results->setError(
+                    self::DEFAULT_CODE,
+                    $options,
+                    self::DEFAULT_MESSAGE
+                );
                 $results->addChild($result);
             }
         }
 
         $results->setValue($data);
-        $results->setName($name);
-
-        if (!$results->isValid()) {
-            $results->setMessage(
-                "Processor {$name} failed validation"
-            );
-        }
 
         return $results;
     }
