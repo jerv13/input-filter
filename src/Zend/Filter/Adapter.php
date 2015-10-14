@@ -7,9 +7,9 @@ use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\Result\Result;
 
 /**
- * Class FilterAdapter
+ * Class Adapter
  */
-class FilterAdapter extends AbstractProcessor
+class Adapter extends AbstractProcessor
 {
     /**
      * process Filter and/or Validate
