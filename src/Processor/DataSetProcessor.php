@@ -2,7 +2,6 @@
 
 namespace JervDesign\InputFilter\Processor;
 
-use JervDesign\InputFilter\Message\MessageParser;
 use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\ServiceLocator;
 

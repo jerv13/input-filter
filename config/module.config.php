@@ -4,7 +4,9 @@ return [
      * Configuration
      */
     'JervDesign\\InputFilter' => [
-        'messageParsers' => [],
+        'messageParsers' => [
+            'JervDesign\InputFilter\Message\ParamsMessageParser'
+        ],
     ],
     'exampleConfig' => [
         [
@@ -28,9 +30,11 @@ return [
                     ],
                 ]
             ],
+            // message over-ride
             'messages' => [
                 '{code}' =>'{messageValue}',
             ],
+            // message params?
             'messageParams' => [
                 '{code}' =>[
                     '{paramName}' => '{paramValue}'
