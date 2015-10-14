@@ -272,11 +272,12 @@ abstract class AbstractResult implements Result
 
         if (empty($ns)) {
             $ns = $this->getName();
+            $messages[$ns] = $this->getMessage();
         }
 
         /** @var Result $result */
         foreach ($results as $result) {
-            $subNs = $ns . '-' . $result->getName();
+            $subNs = $ns . '-' . $result->getCode();
 
             $messages = $this->getMessages(
                 $result->getChildren(),
