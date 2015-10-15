@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\Zend\Filter;
+namespace JervDesign\InputFilter\Zend\Filter;
 
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;

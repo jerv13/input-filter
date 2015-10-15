@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\Zend\Factory;
+namespace JervDesign\InputFilter\Zend\Factory;
 
 use JervDesign\InputFilter\Processor\DataSetProcessor;
 use Zend\ServiceManager\FactoryInterface;

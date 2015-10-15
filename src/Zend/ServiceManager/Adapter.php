@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\Zend\ServiceManger;
+namespace JervDesign\InputFilter\Zend\ServiceManger;
 
 use JervDesign\InputFilter\ServiceLocator;
 use Zend\ServiceManager\ServiceLocatorInterface;

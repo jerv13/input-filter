@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\Zend\Validator;
+namespace JervDesign\InputFilter\Zend\Validator;
 
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;

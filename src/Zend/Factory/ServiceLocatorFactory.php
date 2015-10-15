@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\Zend\Factory;
+namespace JervDesign\InputFilter\Zend\Factory;
 
 use JervDesign\Zend\ServiceManger\Adapter;
 use Zend\ServiceManager\FactoryInterface;
