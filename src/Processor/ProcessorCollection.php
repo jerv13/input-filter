@@ -6,9 +6,9 @@ use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**
- * Class Processors Composite Processor
+ * Class ProcessorCollection Composite Processor
  */
-class Processors extends AbstractProcessor
+class ProcessorCollection extends AbstractProcessor
 {
     /**
      * DEFAULT_CODE

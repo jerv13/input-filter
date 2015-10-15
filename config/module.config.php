@@ -1,103 +1,31 @@
 <?php
 return [
-    /**
-     * Configuration
-     */
-    'JervDesign\\InputFilter' => [
-        'messageParsers' => [
-            'JervDesign\InputFilter\Message\ParamsMessageParser'
-        ],
-    ],
-    // message params?
-    'messageParams' => [
-        '{code}' => [
-            '{paramName}' => '{paramValue}'
-        ],
-    ],
-    /**
-     * @example
-     */
-    'My\JervDesign\InputFilter\DataSetProcessor' => [
-        'name' => 'fieldSetName',
-        'dataSet' => [
-            [
-                'processor' => '{ProcessorService}',
-                '{ProcessorServiceOptionKey}' => "{ProcessorServiceOptionValue}",
-                // message over-ride
-                'messages' => [
-                    '{code}' => '{messageValue}',
-                ],
-            ]
-        ],
-        // message over-ride
-        'messages' => [
-            '{code}' => '{messageValue}',
-        ],
-    ],
-    /**
-     * @example
-     */
-    'My\JervDesign\InputFilter\Processors' => [
-        'name' => 'fieldName',
-        'processors' => [
-            [
-                'processor' => '{ProcessorService}',
-                '{ProcessorServiceOptionKey}' => "{ProcessorServiceOptionValue}",
-                // message over-ride
-                'messages' => [
-                    '{code}' => '{messageValue}',
-                ],
-            ]
-
-        ],
-        'messages' => [
-            '{code}' => '{messageValue}',
-        ],
-    ],
-    /**
-     * @example
-     */
-    'My\JervDesign\InputFilter\Service\InputFilterService' => [
-        'name' => 'fieldSetName',
-        'processor' => '{ProcessorService}',
-        '{ProcessorServiceOptionKey}' => "{ProcessorServiceOptionValue}",
-        // message over-ride
-        'messages' => [
-            '{code}' => '{messageValue}',
-        ],
-    ],
-    /**
-     * @example
-     */
-    'My\JervDesign\Zend\Filter\Adapter' => [
-        'name' => 'fieldName',
-        'zendFilter' => '{Zend\Filter\SomeClass}',
-        'zendFilterOptions' => [
-            // options to be passed to zend filter
-        ],
-        // message over-ride
-        'messages' => [
-            '{code}' => '{messageValue}',
-        ],
-    ],
-    /**
-     * @example
-     */
-    'My\JervDesign\Zend\Validator\Adapter' => [
-        'name' => 'fieldName',
-        'zendValidator' => '{Zend\Filter\SomeClass}',
-        'zendValidatorOptions' => [
-            // options to be passed to zend filter
-        ],
-        // message over-ride
-        'messages' => [
-            '{code}' => '{messageValue}',
-        ],
-    ],
-    /* */
+    /* InputFilter Config */
+    'JervDesign\\InputFilter' => include __DIR__ . '/inputfilter.config.php',
+    /* Zend Service Manager */
     'service_manager' => [
         'factories' => [
+            /* ServiceLocator */
+            'JervDesign\InputFilter\ServiceLocator'
+            => 'JervDesign\InputFilter\Zend\Factory\ServiceLocatorFactory',
 
+            /* InputFilterService */
+            'JervDesign\InputFilter\Service\InputFilterService'
+            => 'JervDesign\InputFilter\Zend\Factory\InputFilterServiceFactory',
+
+            /* Processors */
+            'JervDesign\InputFilter\Processor\DataSetProcessor'
+            => 'JervDesign\InputFilter\Zend\Factory\DataSetProcessorFactory',
+
+            'JervDesign\InputFilter\Processor\ProcessorCollection'
+            => 'JervDesign\InputFilter\Zend\Factory\ProcessorCollectionFactory',
+
+            /* Zend Processor Adapters */
+            'JervDesign\InputFilter\Zend\Filter\Adapter'
+            => 'JervDesign\InputFilter\Zend\Factory\FilterAdapterFactory',
+
+            'JervDesign\InputFilter\Zend\Validator\Adapter'
+            => 'JervDesign\InputFilter\Zend\Factory\ValidatorAdapterFactory',
         ]
     ],
 ];

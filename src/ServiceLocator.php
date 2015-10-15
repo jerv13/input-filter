@@ -8,11 +8,19 @@ namespace JervDesign\InputFilter;
 interface ServiceLocator
 {
     /**
-     * get
+     * Retrieve a registered instance
      *
-     * @param $id
-     *
-     * @return mixed
+     * @param  string  $name
+     * @throws \Exception
+     * @return object|array
      */
-    public function get($id);
+    public function get($name);
+
+    /**
+     * Check for a registered instance
+     *
+     * @param  string|array  $name
+     * @return bool
+     */
+    public function has($name);
 }
