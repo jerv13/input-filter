@@ -29,23 +29,4 @@ abstract class AbstractProcessor implements Processor
      * @return Result
      */
     abstract public function process($data, Options $options);
-
-    /**
-     * @deprecated
-     * getOption
-     *
-     * @param string $key
-     * @param array  $options
-     * @param null   $default
-     *
-     * @return null
-     */
-    protected function getOption($key, array $options, $default = null)
-    {
-        if (array_key_exists($key, $options)) {
-            return $options[$key];
-        }
-
-        return $default;
-    }
 }

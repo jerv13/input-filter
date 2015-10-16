@@ -145,7 +145,6 @@ return [
         'dataSet' => [
 
             'myField' => [
-                'name' => 'myField',
                 'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
                 'processors' => [
                     [
@@ -174,7 +173,6 @@ return [
                 ],
             ],
             'yourField' => [
-                'name' => 'yourField',
                 'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
                 'processors' => [
                     [
