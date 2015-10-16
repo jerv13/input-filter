@@ -1,5 +1,7 @@
 <?php
 
+namespace JervDesign\InputFilter\Options;
+
 /**
  * Class ArrayOptions
  */

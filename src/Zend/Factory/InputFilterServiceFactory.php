@@ -7,9 +7,9 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class ProcessorCollectionFactory
+ * Class InputFilterServiceFactory
  */
-class ProcessorCollectionFactory implements FactoryInterface
+class InputFilterServiceFactory implements FactoryInterface
 {
     /**
      * createService

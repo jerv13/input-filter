@@ -14,11 +14,26 @@ return [
             '{paramName}' => '{paramValue}'
         ],
     ],
+
     /**
      * @example
      */
-    'My\JervDesign\InputFilter\DataSetProcessor' => [
+    'My\InputFilterService' => [
+        'name' => 'fieldName',
+        'processor' => '{ProcessorService}',
+        '{ProcessorServiceOptionKey}' => "{ProcessorServiceOptionValue}",
+        // message over-ride
+        'messages' => [
+            '{code}' => '{messageValue}',
+        ],
+    ],
+
+    /**
+     * @example
+     */
+    'My\DataSetProcessor' => [
         'name' => 'fieldSetName',
+        'processor' => 'JervDesign\InputFilter\DataSetProcessor',
         'dataSet' => [
             [
                 'processor' => '{ProcessorService}',
@@ -37,8 +52,9 @@ return [
     /**
      * @example
      */
-    'My\JervDesign\InputFilter\ProcessorCollection' => [
+    'My\ProcessorCollection' => [
         'name' => 'fieldName',
+        'processor' => 'JervDesign\InputFilter\ProcessorCollection',
         'processors' => [
             [
                 'processor' => '{ProcessorService}',
@@ -57,20 +73,9 @@ return [
     /**
      * @example
      */
-    'My\JervDesign\InputFilter\Service\InputFilterService' => [
-        'name' => 'fieldSetName',
-        'processor' => '{ProcessorService}',
-        '{ProcessorServiceOptionKey}' => "{ProcessorServiceOptionValue}",
-        // message over-ride
-        'messages' => [
-            '{code}' => '{messageValue}',
-        ],
-    ],
-    /**
-     * @example
-     */
-    'My\JervDesign\Zend\Filter\Adapter' => [
+    'My\Zend\Filter\Adapter' => [
         'name' => 'fieldName',
+        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
         'zendFilter' => '{Zend\Filter\SomeClass}',
         'zendFilterOptions' => [
             // options to be passed to zend filter
@@ -83,11 +88,12 @@ return [
     /**
      * @example
      */
-    'My\JervDesign\Zend\Validator\Adapter' => [
+    'My\Zend\Validator\Adapter' => [
         'name' => 'fieldName',
+        'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
         'zendValidator' => '{Zend\Filter\SomeClass}',
         'zendValidatorOptions' => [
-            // options to be passed to zend filter
+            // options to be passed to zend validator
         ],
         // message over-ride
         'messages' => [

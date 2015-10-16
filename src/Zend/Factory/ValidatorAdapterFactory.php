@@ -2,7 +2,7 @@
 
 namespace JervDesign\InputFilter\Zend\Factory;
 
-use JervDesign\Zend\Validator\Adapter;
+use JervDesign\InputFilter\Zend\Validator\Adapter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

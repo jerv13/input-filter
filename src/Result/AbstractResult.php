@@ -20,7 +20,7 @@ abstract class AbstractResult implements Result
     /**
      * @var mixed
      */
-    protected $value;
+    protected $value = null;
 
     /**
      * @var string
@@ -74,7 +74,7 @@ abstract class AbstractResult implements Result
             return;
         }
 
-        if (!array_key_exists($options['messages'][$code], $options)) {
+        if (!array_key_exists($code, $options['messages'])) {
             $this->setMessage($defaultMessage);
 
             return;
@@ -324,10 +324,40 @@ abstract class AbstractResult implements Result
      *
      * @param array $ignore
      *
-     * @return void
+     * @return array
      */
     public function toArray($ignore = [])
     {
-        // @todo
+        $data = [];
+
+        if (!in_array('code', $ignore)) {
+            $data['code'] = $this->getCode();
+        }
+
+        if (!in_array('name', $ignore)) {
+            $data['name'] = $this->getName();
+        }
+
+        if (!in_array('value', $ignore)) {
+            $data['value'] = $this->getValue();
+        }
+
+        if (!in_array('message', $ignore)) {
+            $data['message'] = $this->getMessage();
+        }
+
+        if (!in_array('valid', $ignore)) {
+            $data['valid'] = $this->isValid();
+        }
+
+        if (!in_array('children', $ignore)) {
+            $data['children'] = [];
+            $children = $this->getChildren();
+            foreach ($children as $child) {
+                $data['children'][] = $child->toArray();
+            }
+        }
+
+        return $data;
     }
 }

@@ -29,13 +29,13 @@ class Adapter extends AbstractProcessor
         /** @var \Zend\Validator\AbstractValidator $validator */
         $validator = new $validatorClass($validatorOptions);
 
-        $isValid = $validator->validate($data, $context);
+        $isValid = $validator->isValid($data, $context);
 
         $messages = $validator->getMessages();
 
         $results = new ProcessorResult($name, true);
 
-        if(!$isValid) {
+        if (!$isValid) {
             $results->setError('invalid', $options, 'Validation Failed');
         }
 
