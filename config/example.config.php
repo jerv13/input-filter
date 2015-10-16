@@ -145,6 +145,13 @@ return [
                 'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
                 'processors' => [
                     [
+                        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+                        'zendFilter' => 'Zend\Filter\StripTags',
+                        'zendFilterOptions' => [
+                            'tagsAllowed' => '<br>'
+                        ],
+                    ],
+                    [
                         'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
                         'zendValidator' => 'Zend\Validator\StringLength',
                         'zendValidatorOptions' => [
@@ -155,13 +162,6 @@ return [
                             'invalid' => 'Not even close!',
                             'stringLengthTooShort' => 'Tooo short dude!',
                             'stringLengthTooLong' => 'Tooo long man!',
-                        ],
-                    ],
-                    [
-                        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                        'zendFilter' => 'Zend\Filter\StripTags',
-                        'zendFilterOptions' => [
-                            'tagsAllowed' => '<br>'
                         ],
                     ],
                 ],
