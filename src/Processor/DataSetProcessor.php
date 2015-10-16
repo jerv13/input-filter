@@ -68,6 +68,12 @@ class DataSetProcessor extends AbstractProcessor
 
             $fieldOption['context'] = $context;
 
+            $processorServiceName = $this->getOption(
+                'processor',
+                $fieldOption,
+                null
+            );
+
             $processor = $this->getProcessor($fieldOption['processor']);
 
             $result = $processor->process($value, $fieldOption);
@@ -79,7 +85,7 @@ class DataSetProcessor extends AbstractProcessor
                     self::DEFAULT_CODE,
                     $options,
                     self::DEFAULT_MESSAGE
-                    );
+                );
                 $results->addChild($result);
             }
         }

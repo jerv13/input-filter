@@ -34,6 +34,7 @@ class Adapter extends AbstractProcessor
         $messages = $validator->getMessages();
 
         $results = new ProcessorResult($name, true);
+        $results->setSuccess($data);
 
         if (!$isValid) {
             $results->setError('invalid', $options, 'Validation Failed');

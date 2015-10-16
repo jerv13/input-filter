@@ -15,7 +15,7 @@ return [
             '/inputfilterexample' => [
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => [
-                    'route' => '/inputfilterexample/:id',
+                    'route' => '/inputfilterexample[/:id]',
                     'defaults' => [
                         'controller' => 'JervDesign\InputFilter\Zend\Controller\ExampleController',
                     ]

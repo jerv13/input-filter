@@ -95,6 +95,7 @@ abstract class AbstractResult implements Result
     public function setSuccess($value)
     {
         $this->setValid(true);
+        $this->setValue($value);
         $this->setCode('');
         $this->setMessage('');
     }

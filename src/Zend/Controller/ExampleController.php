@@ -11,6 +11,15 @@ use Zend\View\Model\JsonModel;
 class ExampleController extends AbstractRestfulController
 {
     /**
+     * @var string
+     */
+    protected $defaultExample = 'ZendDataSetProcessor';
+    /**
+     * @var array
+     */
+    protected $exampleConfig = [];
+
+    /**
      * get
      *
      * @param mixed $id
@@ -19,45 +28,79 @@ class ExampleController extends AbstractRestfulController
      */
     public function get($id)
     {
-        $zendServiceLocator= $this->getServiceLocator();
+        $data = [];
+        $data['example'] = $this->defaultExample;
+        $data['data'] = [
+            'myField' => "Some<p>value</p><br>",
+            'yourField' => "<p><br></p>",
+        ];
+
+        return new JsonModel($data);
+    }
+
+    /**
+     * get
+     *
+     * @param mixed $data
+     *
+     * @return JsonModel
+     */
+    public function create($data)
+    {
+        $zendServiceLocator = $this->getServiceLocator();
         /** @var \JervDesign\InputFilter\Service\InputFilterService $inputFilterService */
         $inputFilterService = $zendServiceLocator->get(
             'JervDesign\InputFilter\Service\InputFilterService'
         );
 
-        $exampleConfig = [
-            'name' => 'fieldName',
-            'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-            'zendFilter' => 'Zend\Filter\Boolean',
-            'zendFilterOptions' => [
-                // options to be passed to zend filter
-                'type' => 'integer'
-            ],
-            // message over-ride
-            'messages' => [
-                '{code}' => '{messageValue}',
-            ],
-        ];
+        $exampleConfig = $this->getExampleConfig($data);
 
-        $exampleConfig = [
-            'name' => 'fieldName',
-            'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-            'zendValidator' => 'Zend\Validator\StringLength',
-            'zendValidatorOptions' => [
-                // options to be passed to zend filter
-                'min' => 2,
-                'max' => 4,
-            ],
-            // message over-ride
-            'messages' => [
-                '{code}' => '{messageValue}',
-            ],
-        ];
+        if (!$data['data']) {
+            $data['data'] = [];
+        }
 
-        $result = $inputFilterService->process($id, $exampleConfig);
+        $fields = $data['data'];
+
+        $result = $inputFilterService->process($fields, $exampleConfig);
 
         $return = $result->toArray();
 
         return new JsonModel($return);
+    }
+
+    /**
+     * getExampleConfig
+     *
+     * @param $data
+     *
+     * @return mixed
+     */
+    protected function getExampleConfig($data)
+    {
+        if (empty($this->exampleConfig)) {
+            $this->exampleConfig = include(__DIR__
+                . '/../../../config/example.config.php');
+        }
+        if (!$data['example']) {
+            return $this->getExample($this->defaultExample);
+        }
+
+        return $this->getExample($data['example']);
+    }
+
+    /**
+     * getExample
+     *
+     * @param $key
+     *
+     * @return mixed
+     */
+    protected function getExample($key)
+    {
+        if (!$this->exampleConfig[$key]) {
+            return $this->exampleConfig[$this->defaultExample];
+        }
+
+        return $this->exampleConfig[$key];
     }
 }
