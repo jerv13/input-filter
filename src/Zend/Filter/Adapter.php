@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Zend\Filter;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\Result\Result;
@@ -15,15 +16,15 @@ class Adapter extends AbstractProcessor
      * process Filter and/or Validate
      *
      * @param mixed $data
-     * @param array $options
+     * @param Options $options
      *
      * @return Result
      */
-    public function process($data, array $options = [])
+    public function process($data, Options $options)
     {
-        $name = $this->getOption('name', $options, 'default');
-        $filterClass = $this->getOption('zendFilter', $options);
-        $filterOptions = $this->getOption('zendFilterOptions', $options, []);
+        $name = $options->get('name', 'default');
+        $filterClass = $options->get('zendFilter');
+        $filterOptions = $options->get('zendFilterOptions', []);
 
         /** @var \Zend\Filter\AbstractFilter $filter */
         $filter = new $filterClass();

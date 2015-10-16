@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Processor;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\Result;
 
 /**
@@ -12,10 +13,10 @@ interface Processor
     /**
      * process Filter and/or Validate
      *
-     * @param mixed $data
-     * @param array $options
+     * @param mixed   $data
+     * @param Options $options
      *
      * @return Result
      */
-    public function process($data, array $options = []);
+    public function process($data, Options $options);
 }

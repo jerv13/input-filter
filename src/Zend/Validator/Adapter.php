@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Zend\Validator;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\Result\Result;
@@ -14,17 +15,17 @@ class Adapter extends AbstractProcessor
     /**
      * process Validator and/or Validate
      *
-     * @param mixed $data
-     * @param array $options
+     * @param mixed   $data
+     * @param Options $options
      *
      * @return Result
      */
-    public function process($data, array $options = [])
+    public function process($data, Options $options)
     {
-        $name = $this->getOption('name', $options, 'default');
-        $validatorClass = $this->getOption('zendValidator', $options);
-        $validatorOptions = $this->getOption('zendValidatorOptions', $options, []);
-        $context = $this->getOption('context', $options, []);
+        $name = $options->get('name', 'default');
+        $validatorClass = $options->get('zendValidator');
+        $validatorOptions = $options->get('zendValidatorOptions', []);
+        $context = $options->get('context', []);
 
         /** @var \Zend\Validator\AbstractValidator $validator */
         $validator = new $validatorClass($validatorOptions);

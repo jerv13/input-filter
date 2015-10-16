@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Processor;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\ServiceLocator;
 
@@ -48,25 +49,40 @@ class ProcessorCollection extends AbstractProcessor
     /**
      * process
      *
-     * @param mixed $data
-     * @param array $options
+     * @param mixed   $data
+     * @param Options $options
      *
      * @return ProcessorResult
+     * @throws \Exception
      */
-    public function process($data, array $options = [])
+    public function process($data, Options $options)
     {
-        $name = $this->getOption('name', $options, 'default');
-        $processors = $this->getOption('processors', $options, []);
+        $name = $options->get('name', 'default');
+        $processors = $options->get('processors', []);
+
+        if (empty($processors)) {
+            throw new \Exception('Processors not found in options');
+        }
 
         $results = new ProcessorResult($name, true);
 
-        foreach ($processors as $processorOptions) {
-            $processorServiceName = $this->getOption('processor', $processorOptions, null);
+        foreach ($processors as $key => $processorOptionsArray) {
+            $processorOptions = $options->createOptions($processorOptionsArray);
+
+            $processorServiceName = $processorOptions->get(
+                'processor',
+                null
+            );
+
+            if ($processorServiceName === null) {
+                throw new \Exception('Processor not found in options');
+            }
+
             /** @var Processor $processor */
             $processor = $this->getProcessor($processorServiceName);
 
             // over-ride name
-            $processorOptions['name'] = $name;
+            $processorOptions->set('name', $name);
 
             $result = $processor->process($data, $processorOptions);
 

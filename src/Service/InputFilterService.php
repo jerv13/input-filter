@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Service;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Processor\Processor;
 use JervDesign\InputFilter\Result\Result;
@@ -41,16 +42,40 @@ class InputFilterService extends AbstractProcessor
      * process Filter and/or Validate
      *
      * @param mixed $data
-     * @param array $options
+     * @param Options $options
      *
      * @return Result
      */
-    public function process($data, array $options = [])
+    public function process($data, Options $options)
     {
-        $serviceName = $this->getOption('processor', $options, 'JervDesign\InputFilter\DataSetProcessor');
+        $serviceName = $options->get(
+            'processor',
+            'JervDesign\InputFilter\DataSetProcessor'
+        );
 
         $service = $this->getService($serviceName);
 
         return $service->process($data, $options);
+    }
+
+    /**
+     * processOptions
+     *
+     * @param mixed  $data
+     * @param array  $optionsArray
+     * @param string $optionClass
+     *
+     * @return Result
+     */
+    public function processOptionsArray(
+        $data,
+        array $optionsArray,
+        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions'
+    ) {
+        /** @var Options $options */
+        $options = new $optionClass();
+        $options->setOptions($optionsArray);
+
+        return $this->process($data, $options);
     }
 }

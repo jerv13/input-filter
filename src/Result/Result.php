@@ -3,6 +3,7 @@
 namespace JervDesign\InputFilter\Result;
 
 use JervDesign\InputFilter\Arrayable;
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Stringable;
 
 /**
@@ -10,7 +11,6 @@ use JervDesign\InputFilter\Stringable;
  */
 interface Result extends Stringable, Arrayable
 {
-
     /**
      * setError
      * - Sets code and state
@@ -18,12 +18,23 @@ interface Result extends Stringable, Arrayable
      * - Builds messages based on options and defaultMessage
      *
      * @param string      $code
-     * @param array       $options
+     * @param Options     $options
      * @param null|string $defaultMessage
      *
      * @return void
      */
-    public function setError($code, array $options = [], $defaultMessage = null);
+    public function setError($code, Options $options, $defaultMessage = null);
+
+    /**
+     * setSuccess
+     * - Sets value, code and state
+     * - Setting a code creates a valid result
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function setSuccess($value);
 
     /**
      * setCode

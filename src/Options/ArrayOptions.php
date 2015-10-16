@@ -5,7 +5,7 @@ namespace JervDesign\InputFilter\Options;
 /**
  * Class ArrayOptions
  */
-class ArrayOptions
+class ArrayOptions implements Options
 {
     /**
      * @var array
@@ -13,11 +13,11 @@ class ArrayOptions
     protected $options = [];
 
     /**
-     * @param $options
+     * @param array $options
      */
-    public function __construct(array $options)
+    public function __construct($options = [])
     {
-        $this->options = $options;
+        $this->setOptions($options);
     }
 
     /**
@@ -51,6 +51,18 @@ class ArrayOptions
     }
 
     /**
+     * setOptions
+     *
+     * @param array $optionsData
+     *
+     * @return void
+     */
+    public function setOptions(array $optionsData)
+    {
+        $this->options = $optionsData;
+    }
+
+    /**
      * getOptions
      *
      * @param $key
@@ -61,10 +73,18 @@ class ArrayOptions
     {
         $value = $this->get($key, []);
 
-        if (is_array($value)) {
-            return new ArrayOptions($value);
-        }
+        return $this->createOptions($value);
+    }
 
-        return $value;
+    /**
+     * createOptions
+     *
+     * @param array $optionsData
+     *
+     * @return Options
+     */
+    public function createOptions(array $optionsData)
+    {
+        return new ArrayOptions($optionsData);
     }
 }

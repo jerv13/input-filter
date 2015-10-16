@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Processor;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\Result;
 
 /**
@@ -22,14 +23,15 @@ abstract class AbstractProcessor implements Processor
     /**
      * process Filter and/or Validate
      *
-     * @param mixed $data
-     * @param array $options
+     * @param mixed   $data
+     * @param Options $options
      *
      * @return Result
      */
-    abstract public function process($data, array $options = []);
+    abstract public function process($data, Options $options);
 
     /**
+     * @deprecated
      * getOption
      *
      * @param string $key

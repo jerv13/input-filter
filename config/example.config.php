@@ -136,10 +136,14 @@ return [
             'invalid' => 'Nope!',
         ],
     ],
+    /**
+     * @example
+     */
     'ZendDataSetProcessor' => [
         'name' => 'myFieldSet',
         'processor' => 'JervDesign\InputFilter\Processor\DataSetProcessor',
         'dataSet' => [
+
             'myField' => [
                 'name' => 'myField',
                 'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
@@ -204,4 +208,18 @@ return [
             'invalid' => 'Nope!',
         ],
     ],
+
+    /* concept */
+    'TestConfig' => [
+        'processors' => [
+            'processorAlias' => [
+
+            ]
+        ],
+        'dataSet' => [
+            'myField' => [
+                'processorAlias',
+            ]
+        ],
+    ]
 ];

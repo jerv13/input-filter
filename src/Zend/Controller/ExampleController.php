@@ -61,7 +61,7 @@ class ExampleController extends AbstractRestfulController
 
         $fields = $data['data'];
 
-        $result = $inputFilterService->process($fields, $exampleConfig);
+        $result = $inputFilterService->processOptionsArray($fields, $exampleConfig);
 
         $return = $result->toArray();
 

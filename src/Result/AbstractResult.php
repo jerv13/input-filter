@@ -2,6 +2,8 @@
 
 namespace JervDesign\InputFilter\Result;
 
+use JervDesign\InputFilter\Options\Options;
+
 /**
  * Class AbstractResult
  */
@@ -53,34 +55,36 @@ abstract class AbstractResult implements Result
      * - Setting a code creates an invalid result
      *
      * @param string      $code
-     * @param array       $options
+     * @param Options     $options
      * @param null|string $defaultMessage
      *
      * @return void
      */
-    public function setError($code, array $options = [], $defaultMessage = 'Invalid')
+    public function setError($code, Options $options, $defaultMessage = 'Invalid')
     {
         $this->setValid(false);
         $this->setCode((string)$code);
-        $defaultMessage = (string)$defaultMessage;
+        $defaultMessage = $options->get('message', (string)$defaultMessage);
 
         if (empty($defaultMessage)) {
             $defaultMessage = 'Invalid';
         }
 
-        if (!array_key_exists('messages', $options)) {
+        $messages = $options->get('messages', []);
+
+        if (empty($messages)) {
             $this->setMessage($defaultMessage);
 
             return;
         }
 
-        if (!array_key_exists($code, $options['messages'])) {
+        if (!array_key_exists($code, $messages)) {
             $this->setMessage($defaultMessage);
 
             return;
         }
 
-        $this->setMessage($options['messages'][$code]);
+        $this->setMessage($messages[$code]);
     }
 
     /**

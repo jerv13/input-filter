@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Processor;
 
+use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\ServiceLocator;
 
@@ -49,26 +50,33 @@ class DataSetProcessor extends AbstractProcessor
     /**
      * process
      *
-     * @param mixed $data
-     * @param array $options
+     * @param mixed   $data
+     * @param Options $options
      *
      * @return ProcessorResult
+     * @throws \Exception
      */
-    public function process($data, array $options = [])
+    public function process($data, Options $options)
     {
-        $name = $this->getOption('name', $options, 'default');
-        $fieldOptions = $this->getOption('dataSet', $options, []);
+        $name = $options->get('name', 'default');
+        $fieldOptions = $options->getOptions('dataSet');
         $context = $data;
 
         $results = new ProcessorResult($name, true);
 
         /** @var Processor $processor */
         foreach ($data as $fieldName => $value) {
-            $fieldOption = $this->getOption($fieldName, $fieldOptions, []);
+            $fieldOption = $fieldOptions->getOptions($fieldName);
 
-            $fieldOption['context'] = $context;
+            $fieldOption->set('context', $context);
 
-            $processor = $this->getProcessor($fieldOption['processor']);
+            $processorName = $fieldOption->get('processor', null);
+
+            if ($processorName === null) {
+                throw new \Exception('Processor not found in options');
+            }
+
+            $processor = $this->getProcessor($processorName);
 
             $result = $processor->process($value, $fieldOption);
             $data[$fieldName] = $result->getValue();
