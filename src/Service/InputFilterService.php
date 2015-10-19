@@ -64,15 +64,13 @@ class InputFilterService extends AbstractProcessor
      * @param        $data
      * @param array  $optionsArray
      * @param string $optionClass
-     * @param string $resultParserClass
      *
      * @return Result
      */
     public function processData(
         $data,
         array $optionsArray,
-        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions',
-        $resultParserService = 'JervDesign\InputFilter\Message\DefaultResultParser'
+        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions'
     ) {
         /** @var Options $options */
         $options = new $optionClass();
@@ -80,7 +78,12 @@ class InputFilterService extends AbstractProcessor
 
         $result = $this->process($data, $options);
 
-        return $result;
+        $resultParserService = $options->get(
+            'resultParser',
+            'JervDesign\InputFilter\ResultParser\DefaultResultParser'
+        );
+
+        return $this->parseResult($result, $options, $resultParserService);
     }
 
     /**
@@ -90,15 +93,16 @@ class InputFilterService extends AbstractProcessor
      * @param Options $options
      * @param string  $resultParserService
      *
-     * @return mixed
+     * @return Result
      */
-    public function getResultArray(
+    public function parseResult(
         Result $result,
         Options $options,
-        $resultParserService = 'JervDesign\InputFilter\Message\DefaultResultParser'
+        $resultParserService = 'JervDesign\InputFilter\ResultParser\DefaultResultParser'
     ) {
-        $parcerService = $this->getService($resultParserService);
+        /** @var \JervDesign\InputFilter\ResultParser\ResultParser $parserService */
+        $parserService = $this->getService($resultParserService);
 
-        return $parcerService->parce($result, $options);
+        return $parserService->parse($result, $options);
     }
 }

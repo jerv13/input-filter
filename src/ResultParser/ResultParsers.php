@@ -1,6 +1,9 @@
 <?php
 
-namespace JervDesign\InputFilter\Message;
+namespace JervDesign\InputFilter\ResultParser;
+
+use JervDesign\InputFilter\Options\Options;
+use JervDesign\InputFilter\Result\Result;
 
 /**
  * Class ResultParsers Composite ResultParser
@@ -15,7 +18,7 @@ class ResultParsers implements ResultParser
     /**
      * add
      *
-     * @param ResultParser $ResultParser
+     * @param ResultParser $resultParser
      *
      * @return void
      */
@@ -25,20 +28,20 @@ class ResultParsers implements ResultParser
     }
 
     /**
-     * parseParams
+     * parse
      *
-     * @param string $message
-     * @param array  $options
+     * @param Result  $result
+     * @param Options $options
      *
-     * @return string
+     * @return Result
      */
-    public function parse($code, $message, array $options = [])
+    public function parse(Result $result, Options $options)
     {
-        /** @var ResultParser $ResultParser */
+        /** @var ResultParser $resultParser */
         foreach ($this->resultParsers as $resultParser) {
-            $message = $resultParser->parse($code, $message, $options);
+            $result = $resultParser->parse($result, $options);
         }
 
-        return $message;
+        return $result;
     }
 }

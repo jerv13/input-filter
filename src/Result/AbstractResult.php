@@ -21,6 +21,11 @@ abstract class AbstractResult implements Result
     protected $value = null;
 
     /**
+     * @var mixed
+     */
+    protected $rawValue = null;
+
+    /**
      * @var array
      */
     protected $messages = [];
@@ -38,16 +43,21 @@ abstract class AbstractResult implements Result
     /**
      * @var array
      */
-    protected $children = [];
+    protected $results = [];
 
     /**
      * @param           $name
      * @param bool|true $valid
      */
-    public function __construct($name, Processor $processor, $valid = true)
-    {
+    public function __construct(
+        $name,
+        $rawValue,
+        Processor $processor,
+        $valid = true
+    ) {
         $this->setName($name);
         $this->setValid($valid);
+        $this->setRawValue($rawValue);
         $this->processor = $processor;
     }
 
@@ -105,22 +115,6 @@ abstract class AbstractResult implements Result
     }
 
     /**
-     * getCode
-     *
-     * @param string|null $default
-     *
-     * @return string|null
-     */
-    public function getCode($default = null)
-    {
-        if (empty($this->messages)) {
-            return $default;
-        }
-
-        return array_keys($this->messages)[0];
-    }
-
-    /**
      * setName
      *
      * @param string $name
@@ -140,6 +134,28 @@ abstract class AbstractResult implements Result
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * setRawValue
+     *
+     * @param mixed $rawValue
+     *
+     * @return void
+     */
+    public function setRawValue($rawValue)
+    {
+        $this->rawValue = $rawValue;
+    }
+
+    /**
+     * getRawValue
+     *
+     * @return mixed
+     */
+    public function getRawValue()
+    {
+        return $this->rawValue;
     }
 
     /**
@@ -203,6 +219,18 @@ abstract class AbstractResult implements Result
     }
 
     /**
+     * hasCode
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public function hasCode($code)
+    {
+        return array_key_exists($code, $this->messages);
+    }
+
+    /**
      * setValid
      *
      * @param $valid
@@ -245,33 +273,33 @@ abstract class AbstractResult implements Result
      *
      * @return void
      */
-    public function addChild(Result $result)
+    public function addResult(Result $result)
     {
         // only add invalid results
         if ($result->isValid()) {
             return;
         }
-        $this->children[] = $result;
+        $this->results[] = $result;
     }
 
     /**
-     * getChildren
+     * getResults
      *
      * @return array [Result]
      */
-    public function getChildren()
+    public function getResults()
     {
-        return $this->children;
+        return $this->results;
     }
 
     /**
-     * mergeChildren
+     * mergeResults
      *
      * @param Result $result
      *
      * @return void
      */
-    public function mergeChildren(
+    public function mergeResults(
         Result $result
     ) {
         // only merge invalid results
@@ -279,12 +307,11 @@ abstract class AbstractResult implements Result
             return;
         }
 
-        $this->children = array_merge(
-            $result->getChildren(),
-            $this->children
+        $this->results = array_merge(
+            $result->getResults(),
+            $this->results
         );
     }
-
 
     /**
      * toArray
@@ -293,16 +320,16 @@ abstract class AbstractResult implements Result
      *
      * @return array
      */
-    public function toArray($ignore = [])
+    public function toArray($ignore = ['processor'])
     {
         $data = [];
 
-        if (!in_array('code', $ignore)) {
-            $data['code'] = $this->getCode();
-        }
-
         if (!in_array('name', $ignore)) {
             $data['name'] = $this->getName();
+        }
+
+        if (!in_array('rawValue', $ignore)) {
+            $data['rawValue'] = $this->getRawValue();
         }
 
         if (!in_array('value', $ignore)) {
@@ -321,17 +348,16 @@ abstract class AbstractResult implements Result
             $data['processor'] = get_class($this->processor);
         }
 
-        if (!in_array('children', $ignore)) {
-            $data['children'] = [];
-            $children = $this->getChildren();
-            /** @var Result $child */
-            foreach ($children as $child) {
-                $data['children'][] = $child->toArray();
+        if (!in_array('results', $ignore)) {
+            $data['results'] = [];
+            $results = $this->getResults();
+            /** @var Result $result */
+            foreach ($results as $result) {
+                $data['results'][] = $result->toArray();
             }
         }
 
         return $data;
     }
-
 
 }

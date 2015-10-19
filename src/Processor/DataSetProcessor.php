@@ -62,7 +62,7 @@ class DataSetProcessor extends AbstractProcessor
         $fieldOptions = $options->getOptions('dataSet');
         $context = $data;
 
-        $results = new ProcessorResult($name, $this, true);
+        $results = new ProcessorResult($name, $data, $this, true);
 
         /** @var Processor $processor */
         foreach ($data as $fieldName => $value) {
@@ -88,7 +88,7 @@ class DataSetProcessor extends AbstractProcessor
                     $options,
                     self::DEFAULT_MESSAGE
                 );
-                $results->addChild($result);
+                $results->addResult($result);
             }
         }
 

@@ -37,13 +37,6 @@ interface Result extends Stringable, Arrayable
     public function setSuccess($value);
 
     /**
-     * getCode
-     *
-     * @return string
-     */
-    public function getCode();
-
-    /**
      * setName
      *
      * @param string $name
@@ -58,6 +51,22 @@ interface Result extends Stringable, Arrayable
      * @return string
      */
     public function getName();
+
+    /**
+     * setRawValue
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function setRawValue($value);
+
+    /**
+     * getRawValue
+     *
+     * @return mixed
+     */
+    public function getRawValue();
 
     /**
      * setValue
@@ -102,6 +111,15 @@ interface Result extends Stringable, Arrayable
     public function getMessages();
 
     /**
+     * hasCode
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public function hasCode($code);
+
+    /**
      * isValid
      *
      * @return bool
@@ -115,23 +133,23 @@ interface Result extends Stringable, Arrayable
      *
      * @return void
      */
-    public function addChild(Result $result);
+    public function addResult(Result $result);
 
     /**
-     * getChildren
+     * getResults
      *
      * @return array [Result]
      */
-    public function getChildren();
+    public function getResults();
 
     /**
-     * mergeChildren
+     * mergeResults
      *
      * @param Result $result
      *
      * @return void
      */
-    public function mergeChildren(
+    public function mergeResults(
         Result $result
     );
 }

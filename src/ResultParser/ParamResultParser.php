@@ -1,6 +1,10 @@
 <?php
 
-namespace JervDesign\InputFilter\Message;
+namespace JervDesign\InputFilter\ResultParser;
+
+use JervDesign\InputFilter\Options\ArrayOptions;
+use JervDesign\InputFilter\Options\Options;
+use JervDesign\InputFilter\Result\Result;
 
 /**
  * Class ParamsResultParser
@@ -15,26 +19,46 @@ class ParamsResultParser implements ResultParser
     /**
      * parse
      *
-     * @param string $code
-     * @param string $message
-     * @param array  $options
+     * @param Result  $result
+     * @param Options $options
      *
-     * @return mixed|string
+     * @return Result
      */
-    public function parse($code, $message, array $options = [])
+    public function parse(Result $result, Options $options)
     {
-        if (!array_key_exists(self::MESSAGE_PARAMS_KEY, $options)) {
-            return $message;
+        $messageParams = $options->get(self::MESSAGE_PARAMS_KEY, null);
+
+        if ($messageParams === null) {
+            return $result;
         }
 
-        $messageParams = $options[self::MESSAGE_PARAMS_KEY];
+        $messageParamOptions = new ArrayOptions($messageParams);
 
-        if (!array_key_exists($code, $messageParams)) {
-            return $message;
+        $messages = $result->getMessages();
+
+        foreach ($messages as $code => $message) {
+            $codeMessage = $messageParamOptions->get($code, null);
+
+            if ($codeMessage === null) {
+                continue;
+            }
+
+            $result->setMessage($code, $this->buildMessage($message, $messageParams));
         }
 
-        $params = $options[self::MESSAGE_PARAMS_KEY][$code];
+        return $result;
+    }
 
+    /**
+     * buildMessage
+     *
+     * @param string $message
+     * @param array $params
+     *
+     * @return string
+     */
+    public function buildMessage($message, $params)
+    {
         foreach ($params as $name => $value) {
             $message = str_replace(
                 '{' . $name . '}',

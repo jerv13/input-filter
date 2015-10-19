@@ -34,7 +34,7 @@ class Adapter extends AbstractProcessor
 
         $messages = $validator->getMessages();
 
-        $result = new ProcessorResult($name, $this, true);
+        $result = new ProcessorResult($name, $data, $this, true);
         $result->setSuccess($data);
 
         foreach ($messages as $code => $message) {

@@ -49,7 +49,7 @@ class ProcessorCollection extends AbstractProcessor
     /**
      * process
      *
-     * @param mixed $data
+     * @param mixed   $data
      * @param Options $options
      *
      * @return ProcessorResult
@@ -66,7 +66,7 @@ class ProcessorCollection extends AbstractProcessor
             throw new \Exception('Processors not found in options');
         }
 
-        $results = new ProcessorResult($name, $this, true);
+        $results = new ProcessorResult($name, $data, $this, true);
 
         foreach ($processors as $key => $processorOptionsArray) {
             $processorOptions = $options->createOptions($processorOptionsArray);
@@ -86,7 +86,7 @@ class ProcessorCollection extends AbstractProcessor
             // over-ride name
             $processorOptions->set('name', $name);
 
-            $result = $processor->process($data, $processorOptions, $results);
+            $result = $processor->process($data, $processorOptions);
 
             $data = $result->getValue();
 
@@ -96,10 +96,9 @@ class ProcessorCollection extends AbstractProcessor
                     $options,
                     self::DEFAULT_MESSAGE
                 );
-                foreach($result->getMessages() as $code => $message) {
+                foreach ($result->getMessages() as $code => $message) {
                     $results->setMessage($code, $message);
                 }
-                //$results->addChild($result);
             }
         }
 

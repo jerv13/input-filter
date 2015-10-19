@@ -42,6 +42,9 @@ return [
             => 'JervDesign\InputFilter\Zend\Factory\FilterAdapterFactory',
             'JervDesign\InputFilter\Zend\Validator\Adapter'
             => 'JervDesign\InputFilter\Zend\Factory\ValidatorAdapterFactory',
+            /* Result Parsers */
+            'JervDesign\InputFilter\ResultParser\DefaultResultParser'
+            => 'JervDesign\InputFilter\Zend\Factory\DefaultResultParserFactory'
         ]
     ],
     /* View Manager */

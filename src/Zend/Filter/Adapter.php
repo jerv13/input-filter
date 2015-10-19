@@ -33,7 +33,7 @@ class Adapter extends AbstractProcessor
 
         $filteredData = $filter->filter($data);
 
-        $result = new ProcessorResult($name, $this, true);
+        $result = new ProcessorResult($name, $data, $this, true);
         $result->setSuccess($filteredData);
         return $result;
     }
