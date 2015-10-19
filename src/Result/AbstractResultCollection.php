@@ -68,7 +68,7 @@ class AbstractResultCollection extends AbstractResult implements ResultCollectio
      *
      * @return array
      */
-    public function getMessages($results = null, $ns = '', $messages = [])
+    public function getXMessages($results = null, $ns = '', $messages = [])
     {
         if ($results === null) {
             $results = $this->children;

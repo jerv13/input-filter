@@ -37,15 +37,6 @@ interface Result extends Stringable, Arrayable
     public function setSuccess($value);
 
     /**
-     * setCode
-     *
-     * @param $code
-     *
-     * @return mixed
-     */
-    public function setCode($code);
-
-    /**
      * getCode
      *
      * @return string
@@ -87,18 +78,28 @@ interface Result extends Stringable, Arrayable
     /**
      * setMessage
      *
+     * @param string $code
      * @param string $message
      *
-     * @return void
+     * @return mixed
      */
-    public function setMessage($message);
+    public function setMessage($code, $message);
 
     /**
      * getMessage
      *
-     * @return string
+     * @param $code
+     *
+     * @return mixed
      */
-    public function getMessage();
+    public function getMessage($code);
+
+    /**
+     * getMessages
+     *
+     * @return array
+     */
+    public function getMessages();
 
     /**
      * isValid

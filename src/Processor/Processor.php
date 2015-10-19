@@ -19,5 +19,5 @@ interface Processor
      *
      * @return Result
      */
-    public function process($data, Options $options, ResultCollection $result = null);
+    public function process($data, Options $options);
 }

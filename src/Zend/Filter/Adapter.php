@@ -22,7 +22,7 @@ class Adapter extends AbstractProcessor
      *
      * @return Result
      */
-    public function process($data, Options $options, ResultCollection $results = null)
+    public function process($data, Options $options)
     {
         $name = $options->get('name', 'default');
         $filterClass = $options->get('zendFilter');
@@ -35,7 +35,7 @@ class Adapter extends AbstractProcessor
 
         $filteredData = $filter->filter($data);
 
-        $result = new ProcessorResultCollection($name, $this, true);
+        $result = new ProcessorResult($name, $this, true);
         $result->setSuccess($filteredData);
         return $result;
     }

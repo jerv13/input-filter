@@ -3,9 +3,9 @@
 namespace JervDesign\InputFilter\Message;
 
 /**
- * Class MessageParser
+ * Class ResultParser
  */
-interface MessageParser
+interface ResultParser
 {
     /**
      * parse

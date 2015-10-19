@@ -3,9 +3,9 @@
 namespace JervDesign\InputFilter\Message;
 
 /**
- * Class DefaultMessageParser Returns unchanged string
+ * Class DefaultResultParser Returns unchanged result
  */
-class DefaultMessageParser implements MessageParser
+class DefaultResultParser implements ResultParser
 {
     /**
      * parse

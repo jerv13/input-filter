@@ -13,11 +13,6 @@ abstract class AbstractResult implements Result
     /**
      * @var string
      */
-    protected $code = '';
-
-    /**
-     * @var string
-     */
     protected $name = 'default';
 
     /**
@@ -26,15 +21,18 @@ abstract class AbstractResult implements Result
     protected $value = null;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $message = '';
+    protected $messages = [];
 
     /**
      * @var bool
      */
     protected $valid = true;
 
+    /**
+     * @var Processor|null
+     */
     protected $processor = null;
 
     /**
@@ -62,7 +60,6 @@ abstract class AbstractResult implements Result
     public function setError($code, Options $options, $defaultMessage = 'Invalid')
     {
         $this->setValid(false);
-        $this->setCode((string)$code);
         $defaultMessage = $options->get('message', (string)$defaultMessage);
 
         if (empty($defaultMessage)) {
@@ -72,18 +69,18 @@ abstract class AbstractResult implements Result
         $messages = $options->get('messages', []);
 
         if (empty($messages)) {
-            $this->setMessage($defaultMessage);
+            $this->setMessage($code, $defaultMessage);
 
             return;
         }
 
         if (!array_key_exists($code, $messages)) {
-            $this->setMessage($defaultMessage);
+            $this->setMessage($code, $defaultMessage);
 
             return;
         }
 
-        $this->setMessage($messages[$code]);
+        $this->setMessage($code, $messages[$code]);
     }
 
     /**
@@ -99,32 +96,23 @@ abstract class AbstractResult implements Result
     {
         $this->setValid(true);
         $this->setValue($value);
-        $this->setCode('');
-        $this->setMessage('');
-    }
-
-    /**
-     * setCode
-     *
-     * @param string $code
-     *
-     * @return void
-     */
-    public function setCode($code)
-    {
-        $code = (string)$code;
-
-        $this->code = $code;
+        $this->messages = [];
     }
 
     /**
      * getCode
      *
-     * @return string
+     * @param string|null $default
+     *
+     * @return string|null
      */
-    public function getCode()
+    public function getCode($default = null)
     {
-        return $this->code;
+        if (empty($this->messages)) {
+            return $default;
+        }
+
+        return array_keys($this->messages)[0];
     }
 
     /**
@@ -174,13 +162,15 @@ abstract class AbstractResult implements Result
     /**
      * setMessage
      *
+     * @param string $code
      * @param string $message
      *
-     * @return mixed
+     * @return void
      */
-    public function setMessage($message)
+    public function setMessage($code, $message)
     {
-        $this->message = (string)$message;
+        $code = (string)$code;
+        $this->messages[$code] = (string)$message;
     }
 
     /**
@@ -188,9 +178,23 @@ abstract class AbstractResult implements Result
      *
      * @return string
      */
-    public function getMessage()
+    public function getMessage($code, $default = null)
     {
-        return $this->message;
+        if (array_key_exists($code, $this->messages)) {
+            return $this->messages[$code];
+        }
+
+        return $default;
+    }
+
+    /**
+     * getMessages
+     *
+     * @return array
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 
     /**
@@ -248,8 +252,8 @@ abstract class AbstractResult implements Result
             $data['value'] = $this->getValue();
         }
 
-        if (!in_array('message', $ignore)) {
-            $data['message'] = $this->getMessage();
+        if (!in_array('messages', $ignore)) {
+            $data['messages'] = $this->getMessages();
         }
 
         if (!in_array('valid', $ignore)) {

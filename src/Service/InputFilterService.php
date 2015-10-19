@@ -42,12 +42,12 @@ class InputFilterService extends AbstractProcessor
     /**
      * process Filter and/or Validate
      *
-     * @param mixed $data
+     * @param mixed   $data
      * @param Options $options
      *
      * @return Result
      */
-    public function process($data, Options $options, ResultCollection $results = null)
+    public function process($data, Options $options)
     {
         $serviceName = $options->get(
             'processor',
@@ -56,27 +56,50 @@ class InputFilterService extends AbstractProcessor
 
         $service = $this->getService($serviceName);
 
-        return $service->process($data, $options, $results);
+        return $service->process($data, $options);
     }
 
     /**
-     * processOptions
+     * processData
      *
-     * @param mixed  $data
+     * @param        $data
      * @param array  $optionsArray
      * @param string $optionClass
+     * @param string $resultParserClass
      *
      * @return Result
      */
-    public function processOptionsArray(
+    public function processData(
         $data,
         array $optionsArray,
-        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions'
+        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions',
+        $resultParserService = 'JervDesign\InputFilter\Message\DefaultResultParser'
     ) {
         /** @var Options $options */
         $options = new $optionClass();
         $options->setOptions($optionsArray);
 
-        return $this->process($data, $options);
+        $result = $this->process($data, $options);
+
+        return $result;
+    }
+
+    /**
+     * getResultArray
+     *
+     * @param Result  $result
+     * @param Options $options
+     * @param string  $resultParserService
+     *
+     * @return mixed
+     */
+    public function getResultArray(
+        Result $result,
+        Options $options,
+        $resultParserService = 'JervDesign\InputFilter\Message\DefaultResultParser'
+    ) {
+        $parcerService = $this->getService($resultParserService);
+
+        return $parcerService->parce($result, $options);
     }
 }

@@ -61,11 +61,9 @@ class ExampleController extends AbstractRestfulController
 
         $fields = $data['data'];
 
-        $result = $inputFilterService->processOptionsArray($fields, $exampleConfig);
+        $result = $inputFilterService->processData($fields, $exampleConfig);
 
         $return = $result->toArray();
-
-        //\Doctrine\Common\Util\Debug::dump($result,4); die;
 
         return new JsonModel($return);
     }

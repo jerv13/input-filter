@@ -22,7 +22,7 @@ class Adapter extends AbstractProcessor
      *
      * @return Result
      */
-    public function process($data, Options $options, ResultCollection $results = null)
+    public function process($data, Options $options)
     {
         $name = $options->get('name', 'default');
         $validatorClass = $options->get('zendValidator');
@@ -36,19 +36,13 @@ class Adapter extends AbstractProcessor
 
         $messages = $validator->getMessages();
 
-        $results = new ProcessorResultCollection($name, $this, true);
-        $results->setSuccess($data);
-
-        if (!$isValid) {
-            $results->setError('invalid', $options, 'Validation Failed');
-        }
+        $result = new ProcessorResult($name, $this, true);
+        $result->setSuccess($data);
 
         foreach ($messages as $code => $message) {
-            $result = new ProcessorResult($name, $this);
             $result->setError($code, $options, $message);
-            $results->addChild($result);
         }
 
-        return $results;
+        return $result;
     }
 }

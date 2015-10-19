@@ -5,6 +5,6 @@ namespace JervDesign\InputFilter\Result;
 /**
  * Class ProcessorResult
  */
-class ProcessorResult extends AbstractResult
+class ProcessorResult extends AbstractResultCollection
 {
 }

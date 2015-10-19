@@ -5,8 +5,6 @@ namespace JervDesign\InputFilter\Processor;
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\ProcessorResult;
 use JervDesign\InputFilter\Result\ProcessorResultCollection;
-use JervDesign\InputFilter\Result\Result;
-use JervDesign\InputFilter\Result\ResultCollection;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**
@@ -17,7 +15,7 @@ class ProcessorCollection extends AbstractProcessor
     /**
      * DEFAULT_CODE
      */
-    const DEFAULT_CODE = 'processorsInvalid';
+    const DEFAULT_CODE = 'validationFailedForOneOrMoreProcessors';
 
     /**
      * DEFAULT_CODE
@@ -60,8 +58,7 @@ class ProcessorCollection extends AbstractProcessor
      */
     public function process(
         $data,
-        Options $options,
-        ResultCollection $results = null
+        Options $options
     ) {
         $name = $options->get('name', 'default');
         $processors = $options->get('processors', []);
@@ -70,7 +67,7 @@ class ProcessorCollection extends AbstractProcessor
             throw new \Exception('Processors not found in options');
         }
 
-        $results = new ProcessorResultCollection($name, $this, true);
+        $results = new ProcessorResult($name, $this, true);
 
         foreach ($processors as $key => $processorOptionsArray) {
             $processorOptions = $options->createOptions($processorOptionsArray);
@@ -100,7 +97,10 @@ class ProcessorCollection extends AbstractProcessor
                     $options,
                     self::DEFAULT_MESSAGE
                 );
-                $results->addChild($result);
+                foreach($result->getMessages() as $code => $message) {
+                    $results->setMessage($code, $message);
+                }
+                //$results->addChild($result);
             }
         }
 
