@@ -226,7 +226,11 @@ abstract class AbstractResult implements Result
      */
     public function __toString()
     {
-        return $this->getMessage();
+        if (empty($this->messages)) {
+            return '';
+        }
+
+        $this->messages[array_keys($this->messages)[0]];
     }
 
     /**
