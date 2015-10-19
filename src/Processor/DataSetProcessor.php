@@ -4,7 +4,6 @@ namespace JervDesign\InputFilter\Processor;
 
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\ProcessorResult;
-use JervDesign\InputFilter\Result\ProcessorResultCollection;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**
@@ -80,7 +79,7 @@ class DataSetProcessor extends AbstractProcessor
 
             $processor = $this->getProcessor($processorName);
 
-            $result = $processor->process($value, $fieldOption, $results);
+            $result = $processor->process($value, $fieldOption);
             $data[$fieldName] = $result->getValue();
 
             if (!$result->isValid()) {

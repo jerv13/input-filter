@@ -107,4 +107,31 @@ interface Result extends Stringable, Arrayable
      * @return bool
      */
     public function isValid();
+
+    /**
+     * addResult
+     *
+     * @param Result $result
+     *
+     * @return void
+     */
+    public function addChild(Result $result);
+
+    /**
+     * getChildren
+     *
+     * @return array [Result]
+     */
+    public function getChildren();
+
+    /**
+     * mergeChildren
+     *
+     * @param Result $result
+     *
+     * @return void
+     */
+    public function mergeChildren(
+        Result $result
+    );
 }

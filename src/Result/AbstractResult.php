@@ -36,6 +36,11 @@ abstract class AbstractResult implements Result
     protected $processor = null;
 
     /**
+     * @var array
+     */
+    protected $children = [];
+
+    /**
      * @param           $name
      * @param bool|true $valid
      */
@@ -234,6 +239,54 @@ abstract class AbstractResult implements Result
     }
 
     /**
+     * addResult
+     *
+     * @param Result $result
+     *
+     * @return void
+     */
+    public function addChild(Result $result)
+    {
+        // only add invalid results
+        if ($result->isValid()) {
+            return;
+        }
+        $this->children[] = $result;
+    }
+
+    /**
+     * getChildren
+     *
+     * @return array [Result]
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * mergeChildren
+     *
+     * @param Result $result
+     *
+     * @return void
+     */
+    public function mergeChildren(
+        Result $result
+    ) {
+        // only merge invalid results
+        if ($result->isValid()) {
+            return;
+        }
+
+        $this->children = array_merge(
+            $result->getChildren(),
+            $this->children
+        );
+    }
+
+
+    /**
      * toArray
      *
      * @param array $ignore
@@ -268,6 +321,17 @@ abstract class AbstractResult implements Result
             $data['processor'] = get_class($this->processor);
         }
 
+        if (!in_array('children', $ignore)) {
+            $data['children'] = [];
+            $children = $this->getChildren();
+            /** @var Result $child */
+            foreach ($children as $child) {
+                $data['children'][] = $child->toArray();
+            }
+        }
+
         return $data;
     }
+
+
 }

@@ -4,7 +4,6 @@ namespace JervDesign\InputFilter\Processor;
 
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\ProcessorResult;
-use JervDesign\InputFilter\Result\ProcessorResultCollection;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**

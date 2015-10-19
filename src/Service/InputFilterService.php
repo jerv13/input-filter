@@ -6,7 +6,6 @@ use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Processor\Processor;
 use JervDesign\InputFilter\Result\Result;
-use JervDesign\InputFilter\Result\ResultCollection;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**

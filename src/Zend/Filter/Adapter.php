@@ -5,9 +5,7 @@ namespace JervDesign\InputFilter\Zend\Filter;
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;
-use JervDesign\InputFilter\Result\ProcessorResultCollection;
 use JervDesign\InputFilter\Result\Result;
-use JervDesign\InputFilter\Result\ResultCollection;
 
 /**
  * Class Adapter

@@ -4,7 +4,6 @@ namespace JervDesign\InputFilter\Processor;
 
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\Result;
-use JervDesign\InputFilter\Result\ResultCollection;
 
 /**
  * Interface Processor
