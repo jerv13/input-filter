@@ -5,7 +5,9 @@ namespace JervDesign\InputFilter\Zend\Validator;
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;
+use JervDesign\InputFilter\Result\ProcessorResultCollection;
 use JervDesign\InputFilter\Result\Result;
+use JervDesign\InputFilter\Result\ResultCollection;
 
 /**
  * Class Adapter
@@ -20,7 +22,7 @@ class Adapter extends AbstractProcessor
      *
      * @return Result
      */
-    public function process($data, Options $options)
+    public function process($data, Options $options, ResultCollection $results = null)
     {
         $name = $options->get('name', 'default');
         $validatorClass = $options->get('zendValidator');
@@ -34,7 +36,7 @@ class Adapter extends AbstractProcessor
 
         $messages = $validator->getMessages();
 
-        $results = new ProcessorResult($name, true);
+        $results = new ProcessorResultCollection($name, $this, true);
         $results->setSuccess($data);
 
         if (!$isValid) {
@@ -42,7 +44,7 @@ class Adapter extends AbstractProcessor
         }
 
         foreach ($messages as $code => $message) {
-            $result = new ProcessorResult($name);
+            $result = new ProcessorResult($name, $this);
             $result->setError($code, $options, $message);
             $results->addChild($result);
         }

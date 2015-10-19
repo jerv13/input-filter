@@ -5,7 +5,9 @@ namespace JervDesign\InputFilter\Zend\Filter;
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Result\ProcessorResult;
+use JervDesign\InputFilter\Result\ProcessorResultCollection;
 use JervDesign\InputFilter\Result\Result;
+use JervDesign\InputFilter\Result\ResultCollection;
 
 /**
  * Class Adapter
@@ -20,7 +22,7 @@ class Adapter extends AbstractProcessor
      *
      * @return Result
      */
-    public function process($data, Options $options)
+    public function process($data, Options $options, ResultCollection $results = null)
     {
         $name = $options->get('name', 'default');
         $filterClass = $options->get('zendFilter');
@@ -33,7 +35,7 @@ class Adapter extends AbstractProcessor
 
         $filteredData = $filter->filter($data);
 
-        $result = new ProcessorResult($name);
+        $result = new ProcessorResultCollection($name, $this, true);
         $result->setSuccess($filteredData);
         return $result;
     }

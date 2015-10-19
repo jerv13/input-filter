@@ -6,6 +6,7 @@ use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Processor\AbstractProcessor;
 use JervDesign\InputFilter\Processor\Processor;
 use JervDesign\InputFilter\Result\Result;
+use JervDesign\InputFilter\Result\ResultCollection;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**
@@ -46,7 +47,7 @@ class InputFilterService extends AbstractProcessor
      *
      * @return Result
      */
-    public function process($data, Options $options)
+    public function process($data, Options $options, ResultCollection $results = null)
     {
         $serviceName = $options->get(
             'processor',
@@ -55,7 +56,7 @@ class InputFilterService extends AbstractProcessor
 
         $service = $this->getService($serviceName);
 
-        return $service->process($data, $options);
+        return $service->process($data, $options, $results);
     }
 
     /**

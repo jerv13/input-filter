@@ -65,6 +65,8 @@ class ExampleController extends AbstractRestfulController
 
         $return = $result->toArray();
 
+        //\Doctrine\Common\Util\Debug::dump($result,4); die;
+
         return new JsonModel($return);
     }
 

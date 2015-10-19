@@ -4,6 +4,9 @@ namespace JervDesign\InputFilter\Processor;
 
 use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\ProcessorResult;
+use JervDesign\InputFilter\Result\ProcessorResultCollection;
+use JervDesign\InputFilter\Result\Result;
+use JervDesign\InputFilter\Result\ResultCollection;
 use JervDesign\InputFilter\ServiceLocator;
 
 /**
@@ -56,13 +59,13 @@ class DataSetProcessor extends AbstractProcessor
      * @return ProcessorResult
      * @throws \Exception
      */
-    public function process($data, Options $options)
+    public function process($data, Options $options, ResultCollection $results = null)
     {
         $name = $options->get('name', 'default');
         $fieldOptions = $options->getOptions('dataSet');
         $context = $data;
 
-        $results = new ProcessorResult($name, true);
+        $results = new ProcessorResultCollection($name, $this, true);
 
         /** @var Processor $processor */
         foreach ($data as $fieldName => $value) {
@@ -78,9 +81,9 @@ class DataSetProcessor extends AbstractProcessor
 
             $processor = $this->getProcessor($processorName);
 
-            $result = $processor->process($value, $fieldOption);
+            $result = $processor->process($value, $fieldOption, $results);
             $data[$fieldName] = $result->getValue();
-            $result->setName($name);
+            $result->setName($fieldName);
 
             if (!$result->isValid()) {
                 $results->setError(

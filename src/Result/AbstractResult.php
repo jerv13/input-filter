@@ -3,6 +3,7 @@
 namespace JervDesign\InputFilter\Result;
 
 use JervDesign\InputFilter\Options\Options;
+use JervDesign\InputFilter\Processor\Processor;
 
 /**
  * Class AbstractResult
@@ -34,19 +35,17 @@ abstract class AbstractResult implements Result
      */
     protected $valid = true;
 
-    /**
-     * @var array
-     */
-    protected $children = [];
+    protected $processor = null;
 
     /**
      * @param           $name
      * @param bool|true $valid
      */
-    public function __construct($name, $valid = true)
+    public function __construct($name, Processor $processor, $valid = true)
     {
         $this->setName($name);
         $this->setValid($valid);
+        $this->processor = $processor;
     }
 
     /**
@@ -217,111 +216,13 @@ abstract class AbstractResult implements Result
     }
 
     /**
-     * addResult
-     *
-     * @param Result $result
-     *
-     * @return void
-     */
-    public function addChild(Result $result)
-    {
-        // only add invalid results
-        if ($result->isValid()) {
-            return;
-        }
-        $this->children[] = $result;
-    }
-
-    /**
-     * getChildren
-     *
-     * @return array [Result]
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * mergeChildren
-     *
-     * @param Result $result
-     *
-     * @return mixed
-     */
-    public function mergeChildren(
-        Result $result
-    ) {
-        // only merge invalid results
-        if ($result->isValid()) {
-            return;
-        }
-
-        $this->children = array_merge($result->getChildren(), $this->children);
-    }
-
-    /**
-     * getMessages
-     *
-     * @param null   $results
-     * @param string $ns
-     * @param array  $messages
-     *
-     * @return array
-     */
-    public function getMessages($results = null, $ns = '', $messages = [])
-    {
-        if ($results === null) {
-            $results = $this->children;
-        }
-
-        if (empty($ns)) {
-            $ns = $this->getName();
-            $messages[$ns] = $this->getMessage();
-        }
-
-        /** @var Result $result */
-        foreach ($results as $result) {
-            $subNs = $ns . '-' . $result->getCode();
-
-            $messages = $this->getMessages(
-                $result->getChildren(),
-                $subNs,
-                $messages
-            );
-        }
-
-        return $messages;
-    }
-
-    /**
-     * toString
-     *
-     * @param string $separator
-     *
-     * @return string
-     */
-    public function toString($separator = ' | ')
-    {
-        $messages = $this->getMessages();
-
-        $messageString = ''; //implode($separator, $messages);
-
-        foreach ($messages as $key => $message) {
-            $messageString .= $message . $separator;
-        }
-
-        return $messageString;
-    }
-
-    /**
      * __toString
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->toString();
+        return $this->getMessage();
     }
 
     /**
@@ -355,12 +256,8 @@ abstract class AbstractResult implements Result
             $data['valid'] = $this->isValid();
         }
 
-        if (!in_array('children', $ignore)) {
-            $data['children'] = [];
-            $children = $this->getChildren();
-            foreach ($children as $child) {
-                $data['children'][] = $child->toArray();
-            }
+        if (!in_array('processor', $ignore)) {
+            $data['processor'] = get_class($this->processor);
         }
 
         return $data;
