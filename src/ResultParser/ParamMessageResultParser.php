@@ -7,9 +7,9 @@ use JervDesign\InputFilter\Options\Options;
 use JervDesign\InputFilter\Result\Result;
 
 /**
- * Class ParamsResultParser
+ * Class ParamMessageResultParser
  */
-class ParamsResultParser implements ResultParser
+class ParamMessageResultParser implements ResultParser
 {
     /**
      * string

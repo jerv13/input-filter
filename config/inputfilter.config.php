@@ -3,7 +3,7 @@
  * General Configuration
  */
 return [
-    'messageParsers' => [
-        'JervDesign\InputFilter\Message\ParamsMessageParser'
+    'resultParsers' => [
+        'JervDesign\InputFilter\ResultParser\ParamMessageResultParser'
     ],
 ];
