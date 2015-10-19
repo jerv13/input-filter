@@ -143,7 +143,6 @@ return [
         'name' => 'myFieldSet',
         'processor' => 'JervDesign\InputFilter\Processor\DataSetProcessor',
         'dataSet' => [
-
             'myField' => [
                 'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
                 'processors' => [
@@ -167,9 +166,6 @@ return [
                             'stringLengthTooLong' => 'Tooo long man!',
                         ],
                     ],
-                ],
-                'messages' => [
-                    'Invalid' => 'Not likely!',
                 ],
             ],
             'yourField' => [
@@ -196,28 +192,112 @@ return [
                         ],
                     ],
                 ],
-                'messages' => [
-                    'invalid' => 'Not today!',
-                ],
             ],
         ],
         // message over-ride
         'messages' => [
-            'invalid' => 'Nope!',
+            'dataSetInvalid' => 'Nope!',
         ],
     ],
-
-    /* concept */
-    'TestConfig' => [
-        'processors' => [
-            'processorAlias' => [
-
-            ]
-        ],
-        'dataSet' => [
+    /**
+     * @Concept1
+     */
+    'Concept1' => [
+        [
+            '_messages' => [
+                'dataSetInvalid' => 'Nope!',
+            ],
+            'subSet.someFile' => [
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+                    'zendFilter' => 'Zend\Filter\StripTags',
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => '<br>'
+                    ],
+                ],
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
+                    'zendValidator' => 'Zend\Validator\StringLength',
+                    'zendValidatorOptions' => [
+                        'min' => 2,
+                        'max' => 4,
+                    ],
+                    'messages' => [
+                        'invalid' => 'Not even close!',
+                        'stringLengthTooShort' => 'Tooo short dude!',
+                        'stringLengthTooLong' => 'Tooo long man!',
+                    ],
+                ],
+            ],
+            'subSet.someOtherFile' => [
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+                    'zendFilter' => 'Zend\Filter\StripTags',
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => '<br>'
+                    ],
+                ],
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
+                    'zendValidator' => 'Zend\Validator\StringLength',
+                    'zendValidatorOptions' => [
+                        'min' => 2,
+                        'max' => 4,
+                    ],
+                    'messages' => [
+                        'invalid' => 'Not even close!',
+                        'stringLengthTooShort' => 'Tooo short dude!',
+                        'stringLengthTooLong' => 'Tooo long man!',
+                    ],
+                ],
+            ],
+            'subSet._messages' => [
+                'dataSetInvalid' => 'Nope!',
+            ],
             'myField' => [
-                'processorAlias',
-            ]
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+                    'zendFilter' => 'Zend\Filter\StripTags',
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => '<br>'
+                    ],
+                ],
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
+                    'zendValidator' => 'Zend\Validator\StringLength',
+                    'zendValidatorOptions' => [
+                        'min' => 2,
+                        'max' => 4,
+                    ],
+                    'messages' => [
+                        'invalid' => 'Not even close!',
+                        'stringLengthTooShort' => 'Tooo short dude!',
+                        'stringLengthTooLong' => 'Tooo long man!',
+                    ],
+                ],
+            ],
+            'yourField' => [
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
+                    'zendValidator' => 'Zend\Validator\StringLength',
+                    'zendValidatorOptions' => [
+                        'min' => 2,
+                        'max' => 4,
+                    ],
+                    'messages' => [
+                        'invalid' => 'Not even close!',
+                        'stringLengthTooShort' => 'Tooo short dude!',
+                        'stringLengthTooLong' => 'Tooo long man!',
+                    ],
+                ],
+                [
+                    'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+                    'zendFilter' => 'Zend\Filter\StripTags',
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => '<br>'
+                    ],
+                ],
+            ],
         ],
-    ]
+    ],
 ];

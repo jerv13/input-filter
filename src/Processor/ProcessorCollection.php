@@ -91,11 +91,11 @@ class ProcessorCollection extends AbstractProcessor
             $data = $result->getValue();
 
             if (!$result->isValid()) {
-                $results->setError(
-                    self::DEFAULT_CODE,
-                    $options,
-                    self::DEFAULT_MESSAGE
-                );
+                $results->setValid(false);
+//                    self::DEFAULT_CODE,
+//                    $options,
+//                    self::DEFAULT_MESSAGE
+//                );
                 foreach ($result->getMessages() as $code => $message) {
                     $results->setMessage($code, $message);
                 }
