@@ -261,5 +261,17 @@ return [
         'fieldSet._messages' => [
             'dataSetInvalid' => 'fieldSet bad!',
         ],
+        'fieldSet.fieldSet1.someField12' => [
+            [
+                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+                'zendFilter' => 'Zend\Filter\StripTags',
+                'zendFilterOptions' => [
+                    'tagsAllowed' => '<br>'
+                ],
+            ],
+        ],
+        'fieldSet.fieldSet1._messages' => [
+            'dataSetInvalid' => 'fieldSet bad!',
+        ],
     ],
 ];
