@@ -7,5 +7,9 @@ namespace JervDesign\InputFilter\Test;
  */
 class Test
 {
+    public function test()
+    {
 
+    }
 }
+

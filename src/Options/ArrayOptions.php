@@ -87,4 +87,16 @@ class ArrayOptions implements Options
     {
         return new ArrayOptions($optionsData);
     }
+
+    /**
+     * toArray
+     *
+     * @param array $ignore
+     *
+     * @return array
+     */
+    public function toArray($ignore = [])
+    {
+        return $this->options;
+    }
 }

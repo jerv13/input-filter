@@ -2,6 +2,7 @@
 
 namespace JervDesign\InputFilter\Zend\Controller;
 
+use JervDesign\InputFilter\Options\SimpleOptions;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -28,6 +29,13 @@ class ExampleController extends AbstractRestfulController
      */
     public function get($id)
     {
+        $data = ['example' => 'SimpleConfigFormat'];
+        $config = $this->getExampleConfig($data);
+        //var_export($config);
+        $options = new SimpleOptions($config);
+        print_r($options->toArray());
+die;
+        //////
         $data = [];
         $data['example'] = $this->defaultExample;
         $data['data'] = [

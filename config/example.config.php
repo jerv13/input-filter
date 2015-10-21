@@ -205,9 +205,9 @@ return [
     'SimpleConfigFormat' => [
 
         '_messages' => [
-            'dataSetInvalid' => 'Nope!',
+            'dataSetInvalid' => 'Root bad!',
         ],
-        'myField' => [
+        'someField1' => [
             [
                 'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
                 'zendFilter' => 'Zend\Filter\StripTags',
@@ -215,6 +215,8 @@ return [
                     'tagsAllowed' => '<br>'
                 ],
             ],
+        ],
+        'someField2' => [
             [
                 'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
                 'zendValidator' => 'Zend\Validator\StringLength',
@@ -229,36 +231,10 @@ return [
                 ],
             ],
         ],
-        'yourField' => [
-            [
-                'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                'zendValidator' => 'Zend\Validator\StringLength',
-                'zendValidatorOptions' => [
-                    'min' => 2,
-                    'max' => 4,
-                ],
-                'messages' => [
-                    'invalid' => 'Not even close!',
-                    'stringLengthTooShort' => 'Tooo short dude!',
-                    'stringLengthTooLong' => 'Tooo long man!',
-                ],
-            ],
-            [
-                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                'zendFilter' => 'Zend\Filter\StripTags',
-                'zendFilterOptions' => [
-                    'tagsAllowed' => '<br>'
-                ],
-            ],
-        ],
-        'myFieldSet.someFile' => [
-            [
-                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                'zendFilter' => 'Zend\Filter\StripTags',
-                'zendFilterOptions' => [
-                    'tagsAllowed' => '<br>'
-                ],
-            ],
+//        'someField1._messages' => [
+//            'dataSetInvalid' => 'someField1 is wrong',
+//        ],
+        'fieldSet.someField11' => [
             [
                 'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
                 'zendValidator' => 'Zend\Validator\StringLength',
@@ -273,7 +249,7 @@ return [
                 ],
             ],
         ],
-        'myFieldSet.someOtherFile' => [
+        'fieldSet.someField12' => [
             [
                 'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
                 'zendFilter' => 'Zend\Filter\StripTags',
@@ -281,22 +257,9 @@ return [
                     'tagsAllowed' => '<br>'
                 ],
             ],
-            [
-                'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                'zendValidator' => 'Zend\Validator\StringLength',
-                'zendValidatorOptions' => [
-                    'min' => 2,
-                    'max' => 4,
-                ],
-                'messages' => [
-                    'invalid' => 'Not even close!',
-                    'stringLengthTooShort' => 'Tooo short dude!',
-                    'stringLengthTooLong' => 'Tooo long man!',
-                ],
-            ],
         ],
-        'myFieldSet._messages' => [
-            'dataSetInvalid' => 'Nope!',
+        'fieldSet._messages' => [
+            'dataSetInvalid' => 'fieldSet bad!',
         ],
     ],
 ];
