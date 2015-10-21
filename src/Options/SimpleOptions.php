@@ -55,7 +55,7 @@ class SimpleOptions extends ArrayOptions
             $this->buildArray(
                 $fieldPath,
                 $processorData,
-                $parsedOptionData
+                $parsedOptionData['dataSet']
             );
         }
 
@@ -76,22 +76,41 @@ class SimpleOptions extends ArrayOptions
         $path = explode('.', $key);
         $root = &$target;
 
-        while (count($path) > 1) {
+        while (count($path) > 0) {
             $branch = array_shift($path);
-            $branch = $this->buildPropertyName($branch);
-            if (!isset($root[$branch])) {
-                $root[$branch] = $this->buildDataSetData($branch);
+            $name = $this->buildPropertyName($branch);
+            if (!isset($root[$name])) {
+                if (count($path) == 0) {
+                    $root[$name] = $this->buildData($name, $value);
+                }
+                if (count($path) == 1) {
+                    $last = array_shift($path);
+                    $dataSetData = $this->buildData($last, $value);
+                    $root[$name] = $this->buildDataSetData($name, [$dataSetData]);
+                    continue;
+                }
+            } else {
+                if (count($path) == 0) {
+                    $root[$name] = $this->buildData($name, $value);
+                }
+                if (count($path) == 1) {
+                    $last = array_shift($path);
+                    $dataSetData = $this->buildData($last, $value);
+                    $root[$name]['dataSet'][] = $dataSetData;
+                    $root[$name] = $this->buildDataSetData($name, $root[$name]['dataSet']);
+                    continue;
+                }
             }
 
-            $root = &$root[$branch];
+            $root = &$root[$name];
         }
 
-        $branch = $this->buildPropertyName($path[0]);
-        //if (!$this->isReserved($path[0])) {
-        //    $root['dataSet'][$branch] = $this->buildData($branch, $value);
-        //} else {
-            $root[$branch] = $this->buildData($branch, $value);
-        //}
+//        $branch = $this->buildPropertyName($path[0]);
+//        if (!$this->isReserved($path[0])) {
+//            $root[$branch] = $this->buildData($branch, $value);
+//        } else {
+//            $root[$branch] = $this->buildData($branch, $value);
+//        }
 
         return $target;
     }

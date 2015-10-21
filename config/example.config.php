@@ -274,4 +274,18 @@ return [
             'dataSetInvalid' => 'fieldSet bad!',
         ],
     ],
+    'SimpleConfigFormat' => [
+
+        '_messages' => ['root'],
+        'f1' => [
+            'f1-config'
+        ],
+        's1.f11' => [
+            's1.f11-config'
+        ],
+        's1.f12' => [
+            's1.f12-config'
+        ],
+        's1._messages' => ['s1'],
+    ],
 ];
