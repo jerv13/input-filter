@@ -14,11 +14,14 @@ class SimpleOptions extends ArrayOptions
     protected $reservedProperties
         = [
             '_messages' => 'messages',
+            '_dataSet' => 'dataSet',
+            '_field' => 'field',
         ];
     protected $buildMethods
         = [
             'messages' => 'buildMessageData',
-            '_default' => 'buildProcessorCollectionData',
+            'dataSet' => 'buildDataSetData',
+            'field' => 'buildProcessorCollectionData',
         ];
 
     /**
@@ -49,13 +52,13 @@ class SimpleOptions extends ArrayOptions
      */
     protected function buildSimpleOptions(array $optionsData)
     {
-        $parsedOptionData = $this->buildDataSetData('root', []);
+        $parsedOptionData = [];
 
         foreach ($optionsData as $fieldPath => $processorData) {
             $this->buildArray(
                 $fieldPath,
                 $processorData,
-                $parsedOptionData['dataSet']
+                $parsedOptionData
             );
         }
 
@@ -73,46 +76,57 @@ class SimpleOptions extends ArrayOptions
      */
     protected function buildArray($key, $value, &$target = [])
     {
-        $path = explode('.', $key);
+        $path = $this->buildNormalPathArray($key);
         $root = &$target;
+        $parentBranch = '';
 
         while (count($path) > 0) {
-            $branch = array_shift($path);
-            $name = $this->buildPropertyName($branch);
-            if (!isset($root[$name])) {
-                if (count($path) == 0) {
-                    $root[$name] = $this->buildData($name, $value);
-                }
-                if (count($path) == 1) {
-                    $last = array_shift($path);
-                    $dataSetData = $this->buildData($last, $value);
-                    $root[$name] = $this->buildDataSetData($name, [$dataSetData]);
-                    continue;
-                }
-            } else {
-                if (count($path) == 0) {
-                    $root[$name] = $this->buildData($name, $value);
-                }
-                if (count($path) == 1) {
-                    $last = array_shift($path);
-                    $dataSetData = $this->buildData($last, $value);
-                    $root[$name]['dataSet'][] = $dataSetData;
-                    $root[$name] = $this->buildDataSetData($name, $root[$name]['dataSet']);
-                    continue;
+            $name = array_shift($path);
+            $branch = $this->buildPropertyName($name);
+
+            if (!isset($root[$branch])) {
+                if ($this->isReserved($name)) {
+                    $parent = $this->buildData($branch, $value);
+                    $root = array_merge($parent, $root);
+                } else {
+                    //if ($parentBranch == 'dataSet')
+                    //$root[$branch] = $this->buildDataSetData($branch, $value);
+
+                //} else {
+                    $root[$branch] = $this->buildData($branch, $value);
                 }
             }
 
-            $root = &$root[$name];
+            $parentBranch = $branch;
+            $root = &$root[$branch];
         }
 
-//        $branch = $this->buildPropertyName($path[0]);
-//        if (!$this->isReserved($path[0])) {
-//            $root[$branch] = $this->buildData($branch, $value);
-//        } else {
-//            $root[$branch] = $this->buildData($branch, $value);
-//        }
+        //$root[$branch] = $this->buildData($branch, $value);
 
         return $target;
+    }
+
+    protected function buildNormalPathArray($key)
+    {
+        $path = explode('.', $key);
+
+        $normalPath = [];
+        $pathCnt = count($path);
+        $pathCntIndex = $pathCnt - 1;
+
+        foreach ($path as $index => $name) {
+            if (!$this->isReserved($name)) {
+                $normalPath[] = '_dataSet';
+            }
+            $normalPath[] = $name;
+            if ($pathCntIndex == $index && !$this->isReserved($name)) {
+                $normalPath[] = '_field';
+            }
+        }
+
+        var_export(implode('.', $normalPath));
+
+        return $normalPath;
     }
 
     /**
@@ -125,7 +139,7 @@ class SimpleOptions extends ArrayOptions
      */
     protected function buildData($name, $value)
     {
-        $method = $this->buildMethods['_default'];
+        $method = $this->buildMethods['field'];
 
         if (array_key_exists($name, $this->buildMethods)) {
             $method = $this->buildMethods[$name];

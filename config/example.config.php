@@ -280,12 +280,25 @@ return [
         'f1' => [
             'f1-config'
         ],
+        'f2' => [
+            'f2-config'
+        ],
         's1.f11' => [
             's1.f11-config'
         ],
         's1.f12' => [
             's1.f12-config'
         ],
-        's1._messages' => ['s1'],
+        's1.s11.f111' => [
+            's1.s11.f111-config'
+        ],
+        's1.s12.f112' => [
+            's1.s12.f112-config'
+        ],
+        's1.s12._messages' => ['s1'],
     ],
+    'x' => [
+        '_dataSet.s1._dataSet.s12._dataSet.f112',
+        '_dataSet.s1._dataSet.s12._messages',
+    ]
 ];
