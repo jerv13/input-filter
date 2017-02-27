@@ -4,6 +4,6 @@
  */
 return [
     'resultParsers' => [
-        'JervDesign\InputFilter\ResultParser\ParamMessageResultParser'
+        Jerv\Validation\ResultParser\ParamMessageResultParser::class
     ],
 ];

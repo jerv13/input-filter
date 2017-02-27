@@ -1,10 +1,10 @@
 <?php
 
-namespace JervDesign\InputFilter\Result;
+namespace Jerv\Validation\Result;
 
-use JervDesign\InputFilter\Arrayable;
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Stringable;
+use Jerv\Validation\Arrayable;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Stringable;
 
 /**
  * Interface Result

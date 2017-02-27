@@ -1,24 +1,23 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\ResultParser\DefaultResultParser;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Jerv\Validation\ResultParser\DefaultResultParser;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class DefaultResultParserFactory
  */
-class DefaultResultParserFactory implements FactoryInterface
+class DefaultResultParserFactory
 {
     /**
      * createService
      *
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface $container
      *
      * @return DefaultResultParser
      */
-    public function createService(ServiceLocatorInterface $zendServiceLocator)
+    public function __($container)
     {
         return new DefaultResultParser();
     }

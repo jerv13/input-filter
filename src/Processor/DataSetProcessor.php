@@ -1,10 +1,10 @@
 <?php
 
-namespace JervDesign\InputFilter\Processor;
+namespace Jerv\Validation\Processor;
 
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Result\ProcessorResult;
-use JervDesign\InputFilter\ServiceLocator;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Result\ProcessorResult;
+use Jerv\Validation\ServiceLocator;
 
 /**
  * Class DataSetProcessor

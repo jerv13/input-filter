@@ -1,8 +1,8 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\Zend\Validator\Adapter;
+use Jerv\Validation\Zend\Validator\Adapter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

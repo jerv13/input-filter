@@ -2,27 +2,6 @@
 return [
     /* InputFilter Config */
     'Jerv\\Validation' => include __DIR__ . '/jerv.validator.config.php',
-    /* Controllers */
-    'controllers' => [
-        'invokables' => [
-            Jerv\Validation\Zend\Controller\ExampleController::class
-            => Jerv\Validation\Zend\Controller\ExampleController::class,
-        ],
-    ],
-    /* Routes */
-    'router' => [
-        'routes' => [
-            '/inputfilterexample' => [
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => [
-                    'route' => '/inputfilterexample[/:id]',
-                    'defaults' => [
-                        'controller' => Jerv\Validation\Zend\Controller\ExampleController::class,
-                    ]
-                ],
-            ],
-        ],
-    ],
     /* Zend Service Manager */
     'service_manager' => [
         'factories' => [
@@ -47,11 +26,4 @@ return [
             => Jerv\Validation\Zend\Factory\DefaultResultParserFactory::class
         ]
     ],
-    /* View Manager */
-    'view_manager' => [
-        'strategies' => [
-            'ViewJsonStrategy',
-        ],
-    ],
-
 ];

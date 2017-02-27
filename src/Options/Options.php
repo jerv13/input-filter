@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\InputFilter\Options;
+namespace Jerv\Validation\Options;
 
 /**
  * Interface Options

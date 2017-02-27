@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\InputFilter;
+namespace Jerv\Validation;
 
 /**
  * Class Context

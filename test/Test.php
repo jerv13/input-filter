@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\InputFilter\Test;
+namespace Jerv\Validation\Test;
 
 /**
  * Class Test

@@ -1,8 +1,8 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\ServiceManager;
+namespace Jerv\Validation\Zend\ServiceManager;
 
-use JervDesign\InputFilter\ServiceLocator;
+use Jerv\Validation\ServiceLocator;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**

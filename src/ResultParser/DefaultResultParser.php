@@ -1,9 +1,9 @@
 <?php
 
-namespace JervDesign\InputFilter\ResultParser;
+namespace Jerv\Validation\ResultParser;
 
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Result\Result;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Result\Result;
 
 /**
  * Class DefaultResultParser Returns unchanged result

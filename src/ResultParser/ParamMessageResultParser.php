@@ -1,10 +1,10 @@
 <?php
 
-namespace JervDesign\InputFilter\ResultParser;
+namespace Jerv\Validation\ResultParser;
 
-use JervDesign\InputFilter\Options\ArrayOptions;
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Result\Result;
+use Jerv\Validation\Options\ArrayOptions;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Result\Result;
 
 /**
  * Class ParamMessageResultParser

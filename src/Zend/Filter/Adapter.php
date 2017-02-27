@@ -1,11 +1,11 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Filter;
+namespace Jerv\Validation\Zend\Filter;
 
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Processor\AbstractProcessor;
-use JervDesign\InputFilter\Result\ProcessorResult;
-use JervDesign\InputFilter\Result\Result;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Processor\AbstractProcessor;
+use Jerv\Validation\Result\ProcessorResult;
+use Jerv\Validation\Result\Result;
 
 /**
  * Class Adapter

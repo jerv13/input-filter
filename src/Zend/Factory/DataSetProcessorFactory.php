@@ -1,27 +1,26 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\Processor\DataSetProcessor;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Jerv\Validation\Processor\DataSetProcessor;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class DataSetProcessorFactory
  */
-class DataSetProcessorFactory implements FactoryInterface
+class DataSetProcessorFactory
 {
     /**
      * createService
      *
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface $container
      *
      * @return DataSetProcessor
      */
-    public function createService(ServiceLocatorInterface $zendServiceLocator)
+    public function __($container)
     {
-        /** @var \JervDesign\InputFilter\ServiceLocator $serviceLocator */
-        $serviceLocator = $zendServiceLocator->get('JervDesign\InputFilter\ServiceLocator');
+        /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
+        $serviceLocator = $container->get('Jerv\Validation\ServiceLocator');
 
         return new DataSetProcessor($serviceLocator);
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace JervDesign\InputFilter\Processor;
+namespace Jerv\Validation\Processor;
 
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Result\Result;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Result\Result;
 
 /**
  * Class AbstractProcessor

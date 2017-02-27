@@ -1,15 +1,15 @@
 <?php
 
-namespace JervDesign\InputFilter\Options;
+namespace Jerv\Validation\Options;
 
 /**
  * Class SimpleOptions
  */
 class SimpleOptions extends ArrayOptions
 {
-    protected $dataSetProcessorName = 'JervDesign\InputFilter\Processor\DataSetProcessor';
+    protected $dataSetProcessorName = 'Jerv\Validation\Processor\DataSetProcessor';
 
-    protected $processorCollectionName = 'JervDesign\InputFilter\Processor\ProcessorCollection';
+    protected $processorCollectionName = 'Jerv\Validation\Processor\ProcessorCollection';
 
     protected $reservedProperties
         = [

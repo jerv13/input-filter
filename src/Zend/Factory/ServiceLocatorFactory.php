@@ -1,24 +1,25 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\Zend\ServiceManager\Adapter;
+use Jerv\Validation\Zend\ServiceManager\Adapter;
+use Psr\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class ServiceLocatorFactory
  */
-class ServiceLocatorFactory implements FactoryInterface
+class ServiceLocatorFactory
 {
     /**
      * createService
      *
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface $container
      *
-     * @return Adapter
+     * @return ResultParsers
      */
-    public function createService(ServiceLocatorInterface $zendServiceLocator)
+    public function __($container)
     {
         return new Adapter($zendServiceLocator);
     }

@@ -1,15 +1,16 @@
 {
-  "name": "jervdesign/input-filter",
-  "description": "Input Filtering and Validation",
+  "name": "jerv/validation",
+  "description": "Input Validation and Filtering",
   "type": "library",
   "license": "BSD-3-Clause",
   "keywords": [
     "rcm",
     "module",
-    "zf2"
+    "zf2",
+    "zend-expressive"
   ],
   "minimum-stability": "stable",
-  "homepage": "https://github.com/jerv13/input-filter",
+  "homepage": "https://github.com/jerv13/validation",
   "authors": [
     {
       "name": "James Jervis",
@@ -19,12 +20,13 @@
   ],
   "require": {
     "php": ">=5.5",
+    "psr/container": "^1.0.0",
     "zendframework/zend-filter": "2.*",
     "zendframework/zend-validator": "2.*"
   },
   "autoload": {
     "psr-4": {
-      "JervDesign\\InputFilter\\": "src/"
+      "Jerv\\Validation\\": "src/"
     }
   }
 }

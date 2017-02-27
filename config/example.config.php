@@ -11,7 +11,7 @@ return [
      */
     '_DataSetProcessor' => [
         'name' => 'fieldSetName',
-        'processor' => 'JervDesign\InputFilter\Processor\DataSetProcessor',
+        'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
         'dataSet' => [
             'myField' => [
                 'processor' => '{ProcessorService}',
@@ -32,7 +32,7 @@ return [
      */
     '_ProcessorCollection' => [
         'name' => 'fieldName',
-        'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
+        'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
         'processors' => [
             [
                 'processor' => '{ProcessorService}',
@@ -53,7 +53,7 @@ return [
      */
     '_ZendFilterAdapter' => [
         'name' => 'fieldName',
-        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
+        'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
         'zendFilter' => '{Zend\Filter\SomeClass}',
         'zendFilterOptions' => [
             // options to be passed to zend filter
@@ -64,7 +64,7 @@ return [
      */
     '_ZendValidatorAdapter' => [
         'name' => 'fieldName',
-        'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
+        'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
         'zendValidator' => '{Zend\Filter\SomeClass}',
         'zendValidatorOptions' => [
             // options to be passed to zend validator
@@ -81,8 +81,8 @@ return [
      */
     'ZendValidatorStringLength' => [
         'name' => 'myField',
-        'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-        'zendValidator' => 'Zend\Validator\StringLength',
+        'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+        'zendValidator' => Zend\Validator\StringLength::class,
         'zendValidatorOptions' => [
             'min' => 2,
             'max' => 4,
@@ -98,8 +98,8 @@ return [
      */
     'ZendFilterStripTags' => [
         'name' => 'myField',
-        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-        'zendFilter' => 'Zend\Filter\StripTags',
+        'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+        'zendFilter' => Zend\Filter\StripTags::class,
         'zendFilterOptions' => [
             'tagsAllowed' => '<br>'
         ],
@@ -109,11 +109,11 @@ return [
      */
     'ZendCollection' => [
         'name' => 'myField',
-        'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
+        'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
         'processors' => [
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                'zendValidator' => 'Zend\Validator\StringLength',
+                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                'zendValidator' => Zend\Validator\StringLength::class,
                 'zendValidatorOptions' => [
                     'min' => 2,
                     'max' => 4,
@@ -125,8 +125,8 @@ return [
                 ],
             ],
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                'zendFilter' => 'Zend\Filter\StripTags',
+                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                'zendFilter' => Zend\Filter\StripTags::class,
                 'zendFilterOptions' => [
                     'tagsAllowed' => '<br>'
                 ],
@@ -141,21 +141,21 @@ return [
      */
     'ZendDataSetProcessor' => [
         'name' => 'myFieldSet',
-        'processor' => 'JervDesign\InputFilter\Processor\DataSetProcessor',
+        'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
         'dataSet' => [
             'myField' => [
-                'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
+                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
                 'processors' => [
                     [
-                        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                        'zendFilter' => 'Zend\Filter\StripTags',
+                        'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                        'zendFilter' => Zend\Filter\StripTags::class,
                         'zendFilterOptions' => [
                             'tagsAllowed' => '<br>'
                         ],
                     ],
                     [
-                        'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                        'zendValidator' => 'Zend\Validator\StringLength',
+                        'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                        'zendValidator' => Zend\Validator\StringLength::class,
                         'zendValidatorOptions' => [
                             'min' => 2,
                             'max' => 4,
@@ -169,11 +169,11 @@ return [
                 ],
             ],
             'yourField' => [
-                'processor' => 'JervDesign\InputFilter\Processor\ProcessorCollection',
+                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
                 'processors' => [
                     [
-                        'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                        'zendValidator' => 'Zend\Validator\StringLength',
+                        'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                        'zendValidator' => Zend\Validator\StringLength::class,
                         'zendValidatorOptions' => [
                             'min' => 2,
                             'max' => 4,
@@ -185,8 +185,8 @@ return [
                         ],
                     ],
                     [
-                        'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                        'zendFilter' => 'Zend\Filter\StripTags',
+                        'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                        'zendFilter' => Zend\Filter\StripTags::class,
                         'zendFilterOptions' => [
                             'tagsAllowed' => '<br>'
                         ],
@@ -209,8 +209,8 @@ return [
         ],
         'someField1' => [
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                'zendFilter' => 'Zend\Filter\StripTags',
+                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                'zendFilter' => Zend\Filter\StripTags::class,
                 'zendFilterOptions' => [
                     'tagsAllowed' => '<br>'
                 ],
@@ -218,8 +218,8 @@ return [
         ],
         'someField2' => [
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                'zendValidator' => 'Zend\Validator\StringLength',
+                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                'zendValidator' => Zend\Validator\StringLength::class,
                 'zendValidatorOptions' => [
                     'min' => 2,
                     'max' => 4,
@@ -236,8 +236,8 @@ return [
 //        ],
         'fieldSet.someField11' => [
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Validator\Adapter',
-                'zendValidator' => 'Zend\Validator\StringLength',
+                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                'zendValidator' => Zend\Validator\StringLength::class,
                 'zendValidatorOptions' => [
                     'min' => 2,
                     'max' => 4,
@@ -251,8 +251,8 @@ return [
         ],
         'fieldSet.someField12' => [
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                'zendFilter' => 'Zend\Filter\StripTags',
+                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                'zendFilter' => Zend\Filter\StripTags::class,
                 'zendFilterOptions' => [
                     'tagsAllowed' => '<br>'
                 ],
@@ -263,8 +263,8 @@ return [
         ],
         'fieldSet.fieldSet1.someField12' => [
             [
-                'processor' => 'JervDesign\InputFilter\Zend\Filter\Adapter',
-                'zendFilter' => 'Zend\Filter\StripTags',
+                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                'zendFilter' => Zend\Filter\StripTags::class,
                 'zendFilterOptions' => [
                     'tagsAllowed' => '<br>'
                 ],
@@ -274,7 +274,7 @@ return [
             'dataSetInvalid' => 'fieldSet bad!',
         ],
     ],
-    'SimpleConfigFormat' => [
+    'SimpleConfigFormat2' => [
 
         '_messages' => ['root'],
         'f1' => [

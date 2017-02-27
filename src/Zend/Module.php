@@ -1,12 +1,9 @@
 <?php
-/**
- * Module Config For ZF2
- */
 
-namespace JervDesign\InputFilter\Zend;
+namespace Jerv\Validation\Zend;
 
 /**
- * Class Module
+ * Class Module for ZF2
  */
 class Module
 {

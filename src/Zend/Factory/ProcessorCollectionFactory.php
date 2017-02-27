@@ -1,27 +1,26 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\Processor\ProcessorCollection;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Jerv\Validation\Processor\ProcessorCollection;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class ProcessorCollectionFactory
  */
-class ProcessorCollectionFactory implements FactoryInterface
+class ProcessorCollectionFactory
 {
     /**
      * createService
      *
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface $container
      *
      * @return ProcessorCollection
      */
-    public function createService(ServiceLocatorInterface $zendServiceLocator)
+    public function __($container)
     {
-        /** @var \JervDesign\InputFilter\ServiceLocator $serviceLocator */
-        $serviceLocator = $zendServiceLocator->get('JervDesign\InputFilter\ServiceLocator');
+        /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
+        $serviceLocator = $container->get('Jerv\Validation\ServiceLocator');
 
         return new ProcessorCollection($serviceLocator);
     }

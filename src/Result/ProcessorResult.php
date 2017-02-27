@@ -1,6 +1,6 @@
 <?php
 
-namespace JervDesign\InputFilter\Result;
+namespace Jerv\Validation\Result;
 
 /**
  * Class ProcessorResult

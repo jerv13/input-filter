@@ -1,30 +1,28 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\ResultParser\DefaultResultParser;
-use JervDesign\InputFilter\ResultParser\ResultParsers;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Jerv\Validation\ResultParser\ResultParsers;
+use Psr\Container\ContainerInterface;
 
 /**
- * Class DefaultResultParserFactory
+ * Class ResultParserFactory
  */
-class DefaultResultParserFactory implements FactoryInterface
+class ResultParserFactory
 {
     /**
      * createService
      *
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface $container
      *
-     * @return DefaultResultParser
+     * @return ResultParsers
      */
-    public function createService(ServiceLocatorInterface $zendServiceLocator)
+    public function __($container)
     {
-        /** @var \JervDesign\InputFilter\ServiceLocator $serviceLocator */
-        $serviceLocator = $zendServiceLocator->get('JervDesign\InputFilter\ServiceLocator');
-        $config = $zendServiceLocator->get('config');
-        $parserConfig = $config['JervDesign\\InputFilter']['resultParsers'];
+        /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
+        $serviceLocator = $container->get(\Jerv\Validation\ServiceLocator::class);
+        $config = $container->get('config');
+        $parserConfig = $config['Jerv\\Validation']['resultParsers'];
 
         return new ResultParsers($serviceLocator, $parserConfig);
     }

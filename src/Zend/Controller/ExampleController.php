@@ -1,8 +1,8 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Controller;
+namespace Jerv\Validation\Zend\Controller;
 
-use JervDesign\InputFilter\Options\SimpleOptions;
+use Jerv\Validation\Options\SimpleOptions;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -56,9 +56,9 @@ die;
     public function create($data)
     {
         $zendServiceLocator = $this->getServiceLocator();
-        /** @var \JervDesign\InputFilter\Service\InputFilterService $inputFilterService */
+        /** @var \Jerv\Validation\Service\InputFilterService $inputFilterService */
         $inputFilterService = $zendServiceLocator->get(
-            'JervDesign\InputFilter\Service\InputFilterService'
+            'Jerv\Validation\Service\InputFilterService'
         );
 
         $exampleConfig = $this->getExampleConfig($data);

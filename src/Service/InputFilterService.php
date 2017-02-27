@@ -1,11 +1,11 @@
 <?php
 
-namespace JervDesign\InputFilter\Service;
+namespace Jerv\Validation\Service;
 
-use JervDesign\InputFilter\Options\Options;
-use JervDesign\InputFilter\Processor\Processor;
-use JervDesign\InputFilter\Result\Result;
-use JervDesign\InputFilter\ServiceLocator;
+use Jerv\Validation\Options\Options;
+use Jerv\Validation\Processor\Processor;
+use Jerv\Validation\Result\Result;
+use Jerv\Validation\ServiceLocator;
 
 /**
  * Class InputFilterService
@@ -49,13 +49,13 @@ class InputFilterService
     public function process(
         $data,
         array $optionsArray,
-        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions'
+        $optionClass = '\Jerv\Validation\Options\ArrayOptions'
     ) {
         $options = $this->buildOptions($optionsArray, $optionClass);
 
         $serviceName = $options->get(
             'processor',
-            'JervDesign\InputFilter\DataSetProcessor'
+            'Jerv\Validation\DataSetProcessor'
         );
 
         $service = $this->getService($serviceName);
@@ -64,7 +64,7 @@ class InputFilterService
 
         $resultParserService = $options->get(
             'resultParser',
-            'JervDesign\InputFilter\ResultParser\DefaultResultParser'
+            'Jerv\Validation\ResultParser\DefaultResultParser'
         );
 
         return $this->parseResult($result, $options, $resultParserService);
@@ -80,7 +80,7 @@ class InputFilterService
      */
     public function buildOptions(
         array $optionsArray,
-        $optionClass = '\JervDesign\InputFilter\Options\ArrayOptions'
+        $optionClass = '\Jerv\Validation\Options\ArrayOptions'
     ) {
         /** @var Options $options */
         $options = new $optionClass();
@@ -100,9 +100,9 @@ class InputFilterService
     public function parseResult(
         Result $result,
         Options $options,
-        $resultParserService = 'JervDesign\InputFilter\ResultParser\DefaultResultParser'
+        $resultParserService = 'Jerv\Validation\ResultParser\DefaultResultParser'
     ) {
-        /** @var \JervDesign\InputFilter\ResultParser\ResultParser $parserService */
+        /** @var \Jerv\Validation\ResultParser\ResultParser $parserService */
         $parserService = $this->getService($resultParserService);
 
         return $parserService->parse($result, $options);

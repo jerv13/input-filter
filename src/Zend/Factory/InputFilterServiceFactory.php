@@ -1,27 +1,26 @@
 <?php
 
-namespace JervDesign\InputFilter\Zend\Factory;
+namespace Jerv\Validation\Zend\Factory;
 
-use JervDesign\InputFilter\Service\InputFilterService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Jerv\Validation\Service\InputFilterService;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class InputFilterServiceFactory
  */
-class InputFilterServiceFactory implements FactoryInterface
+class InputFilterServiceFactory
 {
     /**
      * createService
      *
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface $container
      *
      * @return InputFilterService
      */
-    public function createService(ServiceLocatorInterface $zendServiceLocator)
+    public function __($container)
     {
-        /** @var \JervDesign\InputFilter\ServiceLocator $serviceLocator */
-        $serviceLocator = $zendServiceLocator->get('JervDesign\InputFilter\ServiceLocator');
+        /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
+        $serviceLocator = $container->get(\Jerv\Validation\ServiceLocator::class);
 
         return new InputFilterService($serviceLocator);
     }
