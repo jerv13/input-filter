@@ -7,7 +7,7 @@ return [
     'dependencies' => [
         'factories' => [
             Jerv\Validation\Middleware\ExampleController::class
-            => ExampleControllerFactory::class,
+            => Jerv\Validation\Middleware\ExampleControllerFactory::class,
             /* ServiceLocator */
             Jerv\Validation\ServiceLocator::class
             => Jerv\Validation\Zend\ServiceManager\AdapterFactory::class,
@@ -41,8 +41,8 @@ return [
             'name' => 'jerv-validation.example',
             'path' => '/jerv-validation/example',
             'middleware' => [
-                \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class,
-                \Jerv\Validation\Middleware\ExampleController::class,
+                Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class,
+                Jerv\Validation\Middleware\ExampleController::class,
             ],
             'options' => [],
             'allowed_methods' => ['POST'],
