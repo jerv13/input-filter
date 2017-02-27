@@ -94,6 +94,8 @@ class ExampleController
 
         $exampleKey = $this->defaultExample;
 
+        var_dump($fields, $exampleKey); die;
+
         if (array_key_exists('example', $queryParams)) {
             $exampleKey = $queryParams['example'];
         }
