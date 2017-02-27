@@ -101,7 +101,7 @@ return [
         'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
         'zendFilter' => Zend\Filter\StripTags::class,
         'zendFilterOptions' => [
-            'tagsAllowed' => '<br>'
+            'tagsAllowed' => ['br']
         ],
     ],
     /**
@@ -128,7 +128,7 @@ return [
                 'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
                 'zendFilter' => Zend\Filter\StripTags::class,
                 'zendFilterOptions' => [
-                    'tagsAllowed' => '<br>'
+                    'tagsAllowed' => ['br']
                 ],
             ],
         ],
@@ -140,7 +140,7 @@ return [
      * @example
      */
     'ZendDataSetProcessor' => [
-        'name' => 'myFieldSet',
+        'name' => 'ZendDataSetProcessor',
         'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
         'dataSet' => [
             'myField' => [
@@ -150,7 +150,7 @@ return [
                         'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
                         'zendFilter' => Zend\Filter\StripTags::class,
                         'zendFilterOptions' => [
-                            'tagsAllowed' => '<br>'
+                            'tagsAllowed' => ['br'],
                         ],
                     ],
                     [
@@ -188,7 +188,31 @@ return [
                         'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
                         'zendFilter' => Zend\Filter\StripTags::class,
                         'zendFilterOptions' => [
-                            'tagsAllowed' => '<br>'
+                            'tagsAllowed' => ['br']
+                        ],
+                    ],
+                ],
+            ],
+            'subset' => [
+                'name' => 'subset',
+                'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
+                'dataSet' => [
+                    'myField' => [
+                        'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                        'processors' => [
+                            [
+                                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                                'zendValidator' => Zend\Validator\NotEmpty::class,
+                            ],
+                        ],
+                    ],
+                    'yourField' => [
+                        'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                        'processors' => [
+                            [
+                                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                                'zendValidator' => Zend\Validator\NotEmpty::class,
+                            ],
                         ],
                     ],
                 ],
@@ -203,7 +227,6 @@ return [
      * @SimpleConfigFormat
      */
     'SimpleConfigFormat' => [
-
         '_messages' => [
             'dataSetInvalid' => 'Root bad!',
         ],
@@ -275,7 +298,12 @@ return [
         ],
     ],
     'SimpleConfigFormat2' => [
-
+        '{field-path}' => [
+            // Processor collection
+            '{field-name}' => [['{ProcessorConfig}']]
+        ]
+    ],
+    'SimpleConfigFormat3' => [
         '_messages' => ['root'],
         'f1' => [
             'f1-config'
@@ -297,8 +325,26 @@ return [
         ],
         's1.s12._messages' => ['s1'],
     ],
-    'x' => [
-        '_dataSet.s1._dataSet.s12._dataSet.f112',
-        '_dataSet.s1._dataSet.s12._messages',
-    ]
+    'SimpleConfigFormatProcessed' => [
+        'name' => 'myFieldSet',
+        'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
+        'dataSet' => [
+            'f1' => [
+                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                'processors' => ['f1-config'],
+            ],
+            'f2' => [
+                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                'processors' => ['f2-config'],
+            ],
+            's1' => [
+                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                'processors' => ['f2-config'],
+            ],
+            'f2' => [
+                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                'processors' => ['f2-config'],
+            ],
+        ],
+    ],
 ];

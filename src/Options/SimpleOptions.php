@@ -65,6 +65,8 @@ class SimpleOptions extends ArrayOptions
             );
         }
 
+        var_dump($parsedOptionData);die;
+
         return $parsedOptionData;
     }
 

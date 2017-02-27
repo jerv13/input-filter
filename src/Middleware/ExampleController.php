@@ -2,6 +2,8 @@
 
 namespace Jerv\Validation\Middleware;
 
+use Jerv\Validation\Options\ArrayOptions;
+use Jerv\Validation\Options\SimpleOptions;
 use Jerv\Validation\Service\InputFilterService;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -47,15 +49,49 @@ class ExampleController
     }
 
     /**
+     * getExampleKey
+     *
+     * @param array $queryParams
+     *
+     * @return string
+     */
+    protected function getExampleKey($queryParams)
+    {
+        if (array_key_exists('example', $queryParams)) {
+            return $queryParams['example'];
+        }
+
+        return $this->defaultExample;
+    }
+
+    /**
      * getExampleConfig
      *
-     * @param $exampleKey
+     * @param array $queryParams
      *
      * @return mixed
      */
-    protected function getExampleConfig($exampleKey)
+    protected function getExampleConfig($queryParams)
     {
+        $exampleKey = $this->getExampleKey($queryParams);
+
         return $this->getExample($exampleKey);
+    }
+
+    /**
+     * getOptionsClass
+     *
+     * @param array $queryParams
+     *
+     * @return mixed
+     */
+    protected function getOptionsClass($queryParams)
+    {
+        if (array_key_exists('options-class', $queryParams)) {
+            return urldecode($queryParams['options-class']);
+        }
+
+        return ArrayOptions::class;
     }
 
     /**
@@ -92,20 +128,20 @@ class ExampleController
 
         $queryParams = $request->getQueryParams();
 
-        $exampleKey = $this->defaultExample;
+        $exampleConfig = $this->getExampleConfig($queryParams);
 
-        if (array_key_exists('example', $queryParams)) {
-            $exampleKey = $queryParams['example'];
-        }
-
-        $exampleConfig = $this->getExampleConfig($exampleKey);
+        $optionsClass = $this->getOptionsClass($queryParams);
 
         /** @var \Jerv\Validation\Service\InputFilterService $inputFilterService */
         $inputFilterService = $this->container->get(
             InputFilterService::class
         );
 
-        $result = $inputFilterService->process($fields, $exampleConfig);
+        $result = $inputFilterService->process(
+            $fields,
+            $exampleConfig,
+            $optionsClass
+        );
 
         $return = $result->toArray();
 
