@@ -3,6 +3,7 @@
 namespace Jerv\Validation\Zend\ServiceManager;
 
 use Jerv\Validation\ServiceLocator;
+use Psr\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -16,9 +17,9 @@ class Adapter implements ServiceLocator
     protected $zendServiceLocator;
 
     /**
-     * @param ServiceLocatorInterface $zendServiceLocator
+     * @param ContainerInterface|ServiceLocatorInterface $zendServiceLocator
      */
-    public function __construct(ServiceLocatorInterface $zendServiceLocator)
+    public function __construct($zendServiceLocator)
     {
         $this->zendServiceLocator = $zendServiceLocator;
     }

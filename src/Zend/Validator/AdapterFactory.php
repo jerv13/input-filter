@@ -1,14 +1,13 @@
 <?php
 
-namespace Jerv\Validation\Zend\Factory;
+namespace Jerv\Validation\Zend\Validator;
 
-use Jerv\Validation\Zend\Filter\Adapter;
 use Psr\Container\ContainerInterface;
 
 /**
- * Class FilterAdapterFactory
+ * Class AdapterFactory
  */
-class FilterAdapterFactory
+class AdapterFactory
 {
     /**
      * createService

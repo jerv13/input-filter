@@ -6,6 +6,9 @@ use Jerv\Validation\Options\Options;
 use Jerv\Validation\Processor\Processor;
 use Jerv\Validation\Result\Result;
 use Jerv\Validation\ServiceLocator;
+use Jerv\Validation\Options\ArrayOptions;
+use Jerv\Validation\Processor\DataSetProcessor;
+use Jerv\Validation\ResultParser\DefaultResultParser;
 
 /**
  * Class InputFilterService
@@ -34,7 +37,10 @@ class InputFilterService
      */
     protected function getService($serviceName)
     {
-        return $this->serviceLocator->get($serviceName);
+        /** @var Processor $processor */
+        $processor = $this->serviceLocator->get($serviceName);
+
+        return $processor;
     }
 
     /**
@@ -49,13 +55,13 @@ class InputFilterService
     public function process(
         $data,
         array $optionsArray,
-        $optionClass = '\Jerv\Validation\Options\ArrayOptions'
+        $optionClass = ArrayOptions::class
     ) {
         $options = $this->buildOptions($optionsArray, $optionClass);
 
         $serviceName = $options->get(
             'processor',
-            'Jerv\Validation\DataSetProcessor'
+            DataSetProcessor::class
         );
 
         $service = $this->getService($serviceName);
@@ -64,7 +70,7 @@ class InputFilterService
 
         $resultParserService = $options->get(
             'resultParser',
-            'Jerv\Validation\ResultParser\DefaultResultParser'
+            DefaultResultParser::class
         );
 
         return $this->parseResult($result, $options, $resultParserService);
@@ -100,7 +106,7 @@ class InputFilterService
     public function parseResult(
         Result $result,
         Options $options,
-        $resultParserService = 'Jerv\Validation\ResultParser\DefaultResultParser'
+        $resultParserService = DefaultResultParser::class
     ) {
         /** @var \Jerv\Validation\ResultParser\ResultParser $parserService */
         $parserService = $this->getService($resultParserService);

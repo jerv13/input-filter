@@ -2,14 +2,17 @@
 
 namespace Jerv\Validation\Options;
 
+use Jerv\Validation\Processor\DataSetProcessor;
+use Jerv\Validation\Processor\ProcessorCollection;
+
 /**
  * Class SimpleOptions
  */
 class SimpleOptions extends ArrayOptions
 {
-    protected $dataSetProcessorName = 'Jerv\Validation\Processor\DataSetProcessor';
+    protected $dataSetProcessorName = DataSetProcessor::class;
 
-    protected $processorCollectionName = 'Jerv\Validation\Processor\ProcessorCollection';
+    protected $processorCollectionName = ProcessorCollection::class;
 
     protected $reservedProperties
         = [
@@ -92,7 +95,7 @@ class SimpleOptions extends ArrayOptions
                     //if ($parentBranch == 'dataSet')
                     //$root[$branch] = $this->buildDataSetData($branch, $value);
 
-                //} else {
+                    //} else {
                     $root[$branch] = $this->buildData($branch, $value);
                 }
             }

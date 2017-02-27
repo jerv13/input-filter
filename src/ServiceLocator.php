@@ -2,25 +2,11 @@
 
 namespace Jerv\Validation;
 
+use Psr\Container\ContainerInterface;
+
 /**
  * Interface ServiceLocator
  */
-interface ServiceLocator
+interface ServiceLocator extends ContainerInterface
 {
-    /**
-     * Retrieve a registered instance
-     *
-     * @param  string  $name
-     * @throws \Exception
-     * @return object|array
-     */
-    public function get($name);
-
-    /**
-     * Check for a registered instance
-     *
-     * @param  string|array  $name
-     * @return bool
-     */
-    public function has($name);
 }

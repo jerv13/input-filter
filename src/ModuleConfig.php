@@ -1,6 +1,6 @@
 <?php
 
-namespace Jerv\Validation\Zend;
+namespace Jerv\Validation;
 
 /**
  * Class ModuleConfig
@@ -15,6 +15,6 @@ class ModuleConfig
      */
     public function __invoke()
     {
-        return include __DIR__ . '/../../config/module.config.php';
+        return include __DIR__ . '/../config/module.config.php';
     }
 }

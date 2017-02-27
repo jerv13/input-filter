@@ -1,21 +1,21 @@
 <?php
 return [
     /* InputFilter Config */
-    'Jerv\\Validation' => include __DIR__ . '/jerv.validator.config.php',
+    'jerv-validation' => include __DIR__ . '/jerv.validator.config.php',
     /* Controllers */
     'controllers' => [
-        'invokables' => [
+        'factories' => [
             Jerv\Validation\Zend\Controller\ExampleController::class
-            => Jerv\Validation\Zend\Controller\ExampleController::class,
+            => Jerv\Validation\Zend\Controller\ExampleControllerFactory::class,
         ],
     ],
     /* Routes */
     'router' => [
         'routes' => [
-            '/inputfilterexample' => [
+            'jerv-validation.example' => [
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => [
-                    'route' => '/inputfilterexample[/:id]',
+                    'route' => 'jerv-validation/example[/:id]',
                     'defaults' => [
                         'controller' => Jerv\Validation\Zend\Controller\ExampleController::class,
                     ]
@@ -28,23 +28,23 @@ return [
         'factories' => [
             /* ServiceLocator */
             Jerv\Validation\ServiceLocator::class
-            => Jerv\Validation\Zend\Factory\ServiceLocatorFactory::class,
+            => Jerv\Validation\Zend\ServiceManager\AdapterFactory::class,
             /* InputFilterService */
             Jerv\Validation\Service\InputFilterService::class
-            => Jerv\Validation\Zend\Factory\InputFilterServiceFactory::class,
+            => Jerv\Validation\Service\InputFilterServiceFactory::class,
             /* Processors */
             Jerv\Validation\Processor\DataSetProcessor::class
-            => Jerv\Validation\Zend\Factory\DataSetProcessorFactory::class,
+            => Jerv\Validation\Processor\DataSetProcessorFactory::class,
             Jerv\Validation\Processor\ProcessorCollection::class
-            => Jerv\Validation\Zend\Factory\ProcessorCollectionFactory::class,
+            => Jerv\Validation\Processor\ProcessorCollectionFactory::class,
             /* Zend Processor Adapters */
             Jerv\Validation\Zend\Filter\Adapter::class
-            => Jerv\Validation\Zend\Factory\FilterAdapterFactory::class,
+            => Jerv\Validation\Zend\Filter\AdapterFactory::class,
             Jerv\Validation\Zend\Validator\Adapter::class
-            => Jerv\Validation\Zend\Factory\ValidatorAdapterFactory::class,
+            => Jerv\Validation\Zend\Validator\AdapterFactory::class,
             /* Result Parsers */
             Jerv\Validation\ResultParser\DefaultResultParser::class
-            => Jerv\Validation\Zend\Factory\DefaultResultParserFactory::class
+            => Jerv\Validation\ResultParser\DefaultResultParserFactory::class
         ]
     ],
     /* View Manager */
@@ -53,5 +53,4 @@ return [
             'ViewJsonStrategy',
         ],
     ],
-
 ];

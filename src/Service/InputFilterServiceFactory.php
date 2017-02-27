@@ -1,8 +1,8 @@
 <?php
 
-namespace Jerv\Validation\Zend\Factory;
+namespace Jerv\Validation\Service;
 
-use Jerv\Validation\Service\InputFilterService;
+use Jerv\Validation\ServiceLocator;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -20,7 +20,7 @@ class InputFilterServiceFactory
     public function __($container)
     {
         /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
-        $serviceLocator = $container->get(\Jerv\Validation\ServiceLocator::class);
+        $serviceLocator = $container->get(ServiceLocator::class);
 
         return new InputFilterService($serviceLocator);
     }

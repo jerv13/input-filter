@@ -3,6 +3,8 @@
 namespace Jerv\Validation\Zend\Controller;
 
 use Jerv\Validation\Options\SimpleOptions;
+use Jerv\Validation\Service\InputFilterService;
+use Psr\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -21,6 +23,17 @@ class ExampleController extends AbstractRestfulController
     protected $exampleConfig = [];
 
     /**
+     * Constructor.
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(
+        $container
+    ) {
+        $this->serviceLocator = $container;
+    }
+
+    /**
      * get
      *
      * @param mixed $id
@@ -34,7 +47,7 @@ class ExampleController extends AbstractRestfulController
         //var_export($config);
         $options = new SimpleOptions($config);
         print_r($options->toArray());
-die;
+        die;
         //////
         $data = [];
         $data['example'] = $this->defaultExample;
@@ -58,7 +71,7 @@ die;
         $zendServiceLocator = $this->getServiceLocator();
         /** @var \Jerv\Validation\Service\InputFilterService $inputFilterService */
         $inputFilterService = $zendServiceLocator->get(
-            'Jerv\Validation\Service\InputFilterService'
+            InputFilterService::class
         );
 
         $exampleConfig = $this->getExampleConfig($data);

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jerv\Validation\Zend\Factory;
+namespace Jerv\Validation\ResultParser;
 
-use Jerv\Validation\ResultParser\ResultParsers;
+use Jerv\Validation\ServiceLocator;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -19,10 +19,10 @@ class ResultParserFactory
      */
     public function __($container)
     {
-        /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
-        $serviceLocator = $container->get(\Jerv\Validation\ServiceLocator::class);
+        /** @var ServiceLocator $serviceLocator */
+        $serviceLocator = $container->get(ServiceLocator::class);
         $config = $container->get('config');
-        $parserConfig = $config['Jerv\\Validation']['resultParsers'];
+        $parserConfig = $config['jerv-validation']['resultParsers'];
 
         return new ResultParsers($serviceLocator, $parserConfig);
     }

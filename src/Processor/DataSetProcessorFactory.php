@@ -1,8 +1,8 @@
 <?php
 
-namespace Jerv\Validation\Zend\Factory;
+namespace Jerv\Validation\Processor;
 
-use Jerv\Validation\Processor\DataSetProcessor;
+use Jerv\Validation\ServiceLocator;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -19,8 +19,8 @@ class DataSetProcessorFactory
      */
     public function __($container)
     {
-        /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
-        $serviceLocator = $container->get('Jerv\Validation\ServiceLocator');
+        /** @var ServiceLocator $serviceLocator */
+        $serviceLocator = $container->get(ServiceLocator::class);
 
         return new DataSetProcessor($serviceLocator);
     }

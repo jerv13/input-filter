@@ -1,8 +1,7 @@
 <?php
 
-namespace Jerv\Validation\Zend\Factory;
+namespace Jerv\Validation\ResultParser;
 
-use Jerv\Validation\ResultParser\DefaultResultParser;
 use Psr\Container\ContainerInterface;
 
 /**
