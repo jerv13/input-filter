@@ -17,7 +17,7 @@ class InputFilterServiceFactory
      *
      * @return InputFilterService
      */
-    public function __($container)
+    public function __invoke($container)
     {
         /** @var \Jerv\Validation\ServiceLocator $serviceLocator */
         $serviceLocator = $container->get(ServiceLocator::class);

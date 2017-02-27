@@ -16,7 +16,7 @@ class DefaultResultParserFactory
      *
      * @return DefaultResultParser
      */
-    public function __($container)
+    public function __invoke($container)
     {
         return new DefaultResultParser();
     }

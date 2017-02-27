@@ -43,11 +43,23 @@ class ArrayOptions implements Options
      */
     public function get($key, $default = null)
     {
-        if (array_key_exists($key, $this->options)) {
+        if ($this->has($key)) {
             return $this->options[$key];
         }
 
         return $default;
+    }
+
+    /**
+     * has
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function has($key)
+    {
+        return array_key_exists($key, $this->options);
     }
 
     /**

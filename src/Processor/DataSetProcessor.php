@@ -66,6 +66,12 @@ class DataSetProcessor extends AbstractProcessor
 
         /** @var Processor $processor */
         foreach ($data as $fieldName => $value) {
+            if (!$fieldOptions->has($fieldName)) {
+                // If no options, ignore the value
+                unset($data[$fieldName]);
+                continue;
+            }
+
             $fieldOption = $fieldOptions->getOptions($fieldName);
 
             $fieldOption->set('context', $context);
@@ -74,7 +80,7 @@ class DataSetProcessor extends AbstractProcessor
             $processorName = $fieldOption->get('processor', null);
 
             if ($processorName === null) {
-                throw new \Exception('Processor not found in options');
+                throw new \Exception('Processor not found in options for ' . $fieldName);
             }
 
             $processor = $this->getProcessor($processorName);

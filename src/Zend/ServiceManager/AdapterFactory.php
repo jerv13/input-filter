@@ -17,7 +17,7 @@ class AdapterFactory
      *
      * @return Adapter
      */
-    public function __($container)
+    public function __invoke($container)
     {
         return new Adapter($container);
     }

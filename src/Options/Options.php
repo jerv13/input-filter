@@ -28,6 +28,15 @@ interface Options
     public function get($key, $default = null);
 
     /**
+     * has
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function has($key);
+
+    /**
      * setOptions
      *
      * @param array $optionsData

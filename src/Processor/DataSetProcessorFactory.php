@@ -17,7 +17,7 @@ class DataSetProcessorFactory
      *
      * @return DataSetProcessor
      */
-    public function __($container)
+    public function __invoke($container)
     {
         /** @var ServiceLocator $serviceLocator */
         $serviceLocator = $container->get(ServiceLocator::class);

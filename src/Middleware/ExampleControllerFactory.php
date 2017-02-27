@@ -20,7 +20,7 @@ class ExampleControllerFactory
      *
      * @return ExampleController
      */
-    public function __($container)
+    public function __invoke($container)
     {
         return new ExampleController($container);
     }

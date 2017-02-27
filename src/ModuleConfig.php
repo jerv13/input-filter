@@ -15,6 +15,8 @@ class ModuleConfig
      */
     public function __invoke()
     {
-        return include __DIR__ . '/../config/module.config.php';
+        $config = include __DIR__ . '/../config/module.config.php';
+
+        return $config;
     }
 }
