@@ -3,7 +3,7 @@
 namespace Jerv\Validation\Middleware;
 
 use Jerv\Validation\Options\ArrayOptions;
-use Jerv\Validation\Options\SimpleOptions;
+use Jerv\Validation\Options\FlatOptions;
 use Jerv\Validation\Service\InputFilterService;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;

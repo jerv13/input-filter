@@ -209,6 +209,31 @@ abstract class AbstractResult implements Result
     }
 
     /**
+     * hasMessages
+     *
+     * @return bool
+     */
+    public function hasMessages()
+    {
+        return !empty($this->messages);
+    }
+
+    /**
+     * setMessages
+     *
+     * @param array $messages
+     *
+     * @return void
+     */
+    public function setMessages(array $messages)
+    {
+        $this->results = [];
+        foreach ($messages as $code => $message) {
+            $this->setMessage($code, $message);
+        }
+    }
+
+    /**
      * getMessages
      *
      * @return array
@@ -280,6 +305,19 @@ abstract class AbstractResult implements Result
             return;
         }
         $this->results[] = $result;
+    }
+
+    /**
+     * setResults
+     *
+     * @return void
+     */
+    public function setResults(array $results)
+    {
+        $this->results = [];
+        foreach ($results as $result) {
+            $this->addResult($result);
+        }
     }
 
     /**

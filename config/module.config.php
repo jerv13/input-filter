@@ -14,6 +14,8 @@ return [
             Jerv\Validation\Service\InputFilterService::class
             => Jerv\Validation\Service\InputFilterServiceFactory::class,
             /* Processors */
+            \Jerv\Validation\Processor\DataSetFlatProcessor::class
+            => \Jerv\Validation\Processor\DataSetFlatProcessorFactory::class,
             Jerv\Validation\Processor\DataSetProcessor::class
             => Jerv\Validation\Processor\DataSetProcessorFactory::class,
             Jerv\Validation\Processor\ProcessorCollection::class

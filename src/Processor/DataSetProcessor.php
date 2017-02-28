@@ -2,6 +2,8 @@
 
 namespace Jerv\Validation\Processor;
 
+use Jerv\Validation\Exception\ProcessorException;
+use Jerv\Validation\Options\ArrayOptions;
 use Jerv\Validation\Options\Options;
 use Jerv\Validation\Result\ProcessorResult;
 use Jerv\Validation\ServiceLocator;
@@ -9,7 +11,7 @@ use Jerv\Validation\ServiceLocator;
 /**
  * Class DataSetProcessor
  */
-class DataSetProcessor extends AbstractProcessor
+class DataSetProcessor extends AbstractProcessor implements Processor
 {
     /**
      * DEFAULT_CODE
@@ -59,20 +61,17 @@ class DataSetProcessor extends AbstractProcessor
     public function process($data, Options $options)
     {
         $name = $options->get('name', 'default');
-        $fieldOptions = $options->getOptions('dataSet');
+        $dataSet = $options->get('dataSet', []);
         $context = $data;
 
         $results = new ProcessorResult($name, $data, $this, true);
 
-        /** @var Processor $processor */
-        foreach ($data as $fieldName => $value) {
-            if (!$fieldOptions->has($fieldName)) {
-                // If no options, ignore the value
-                unset($data[$fieldName]);
-                continue;
-            }
+        $cleanData = [];
 
-            $fieldOption = $fieldOptions->getOptions($fieldName);
+        /** @var Processor $processor */
+        foreach ($dataSet as $fieldName => $value) {
+
+            $fieldOption = new ArrayOptions($value);
 
             $fieldOption->set('context', $context);
             $fieldOption->set('name', $fieldName);
@@ -80,13 +79,15 @@ class DataSetProcessor extends AbstractProcessor
             $processorName = $fieldOption->get('processor', null);
 
             if ($processorName === null) {
-                throw new \Exception('Processor not found in options for ' . $fieldName);
+                throw new ProcessorException('Processor not found in options for ' . $fieldName);
             }
 
             $processor = $this->getProcessor($processorName);
 
-            $result = $processor->process($value, $fieldOption);
-            $data[$fieldName] = $result->getValue();
+            $dataValue = $this->getDataValue($fieldName, $data);
+
+            $result = $processor->process($dataValue, $fieldOption);
+            $cleanData[$fieldName] = $result->getValue();
 
             if (!$result->isValid()) {
                 $results->setError(
@@ -98,8 +99,38 @@ class DataSetProcessor extends AbstractProcessor
             }
         }
 
-        $results->setValue($data);
+        $results->setValue($cleanData);
 
         return $results;
+    }
+
+    /**
+     * getDataValue
+     *
+     * @param string $fieldName
+     * @param array  $data
+     *
+     * @return null
+     */
+    protected function getDataValue($fieldName, $data)
+    {
+        if ($this->hasDataField($fieldName, $data)) {
+            return $data[$fieldName];
+        }
+
+        return null;
+    }
+
+    /**
+     * hasDataField
+     *
+     * @param string $fieldName
+     * @param array  $data
+     *
+     * @return bool
+     */
+    protected function hasDataField($fieldName, $data)
+    {
+        return array_key_exists($fieldName, $data);
     }
 }

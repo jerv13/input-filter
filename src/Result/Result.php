@@ -104,6 +104,22 @@ interface Result extends Stringable, Arrayable
     public function getMessage($code);
 
     /**
+     * hasMessages
+     *
+     * @return bool
+     */
+    public function hasMessages();
+
+    /**
+     * setMessages
+     *
+     * @param array $messages
+     *
+     * @return void
+     */
+    public function setMessages(array $messages);
+
+    /**
      * getMessages
      *
      * @return array
@@ -134,6 +150,15 @@ interface Result extends Stringable, Arrayable
      * @return void
      */
     public function addResult(Result $result);
+
+    /**
+     * setResults
+     *
+     * @param array $results
+     *
+     * @return void
+     */
+    public function setResults(array $results);
 
     /**
      * getResults

@@ -2,7 +2,7 @@
 
 namespace Jerv\Validation\Zend\Controller;
 
-use Jerv\Validation\Options\SimpleOptions;
+use Jerv\Validation\Options\FlatOptions;
 use Jerv\Validation\Service\InputFilterService;
 use Psr\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractRestfulController;
@@ -45,7 +45,7 @@ class ExampleController extends AbstractRestfulController
         $data = ['example' => 'SimpleConfigFormat'];
         $config = $this->getExampleConfig($data);
         //var_export($config);
-        $options = new SimpleOptions($config);
+        $options = new FlatOptions($config);
         print_r($options->toArray());
         die;
         //////

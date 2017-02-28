@@ -2,6 +2,7 @@
 
 namespace Jerv\Validation\Processor;
 
+use Jerv\Validation\Exception\ProcessorException;
 use Jerv\Validation\Options\Options;
 use Jerv\Validation\Result\ProcessorResult;
 use Jerv\Validation\ServiceLocator;
@@ -9,7 +10,7 @@ use Jerv\Validation\ServiceLocator;
 /**
  * Class ProcessorCollection Composite Processor
  */
-class ProcessorCollection extends AbstractProcessor
+class ProcessorCollection extends AbstractProcessor implements Processor
 {
     /**
      * DEFAULT_CODE
@@ -63,7 +64,7 @@ class ProcessorCollection extends AbstractProcessor
         $processors = $options->get('processors', []);
 
         if (empty($processors)) {
-            throw new \Exception('Processors not found in options');
+            throw new ProcessorException('Processors not found in options');
         }
 
         $results = new ProcessorResult($name, $data, $this, true);
@@ -77,7 +78,7 @@ class ProcessorCollection extends AbstractProcessor
             );
 
             if ($processorServiceName === null) {
-                throw new \Exception('Processor not found in options');
+                throw new ProcessorException('Processor not found in options');
             }
 
             /** @var Processor $processor */
