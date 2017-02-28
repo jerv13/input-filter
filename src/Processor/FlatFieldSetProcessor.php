@@ -7,13 +7,13 @@ use Jerv\Validation\Options\Options;
 use Jerv\Validation\Result\ProcessorResult;
 
 /**
- * Class DataSetFlatProcessor
+ * Class FlatFieldSetProcessor
  *
  * @author    James Jervis
  * @license   License.txt
  * @link      https://github.com/jerv13
  */
-class DataSetFlatProcessor extends DataSetProcessor implements Processor
+class FlatFieldSetProcessor extends FieldSetProcessor implements Processor
 {
     /**
      * process

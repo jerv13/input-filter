@@ -13,6 +13,9 @@ use Zend\Diactoros\Response\JsonResponse;
 /**
  * Class ExampleController
  *
+ * For testing only
+ * {my-site.com}/jerv-validation/example?example=FieldSetProcessor
+ *
  * @author    James Jervis
  * @license   License.txt
  * @link      https://github.com/jerv13
@@ -20,14 +23,19 @@ use Zend\Diactoros\Response\JsonResponse;
 class ExampleController
 {
     /**
-     * @var ContainerInterface
+     * @var bool
      */
-    protected $container;
+    protected $enabled;
+
+    /**
+     * @var InputFilterService
+     */
+    protected $inputFilterService;
 
     /**
      * @var string
      */
-    protected $defaultExample = '_DEFAULT';
+    protected $defaultExample = 'FieldSetProcessor';
 
     /**
      * @var array
@@ -37,12 +45,15 @@ class ExampleController
     /**
      * Constructor.
      *
-     * @param ContainerInterface $container
+     * @param                    $config
+     * @param InputFilterService $inputFilterService
      */
     public function __construct(
-        $container
+        $config,
+        InputFilterService $inputFilterService
     ) {
-        $this->container = $container;
+        $this->inputFilterService = $inputFilterService;
+        $this->enabled = $config['jerv-validation']['example-controller-enabled'];
         $this->exampleConfig = include(
             __DIR__ . '/../../config/example.config.php'
         );
@@ -79,22 +90,6 @@ class ExampleController
     }
 
     /**
-     * getOptionsClass
-     *
-     * @param array $queryParams
-     *
-     * @return mixed
-     */
-    protected function getOptionsClass($queryParams)
-    {
-        if (array_key_exists('options-class', $queryParams)) {
-            return urldecode($queryParams['options-class']);
-        }
-
-        return ArrayOptions::class;
-    }
-
-    /**
      * getExample
      *
      * @param $key
@@ -124,23 +119,18 @@ class ExampleController
         ResponseInterface $response,
         callable $next = null
     ) {
+        if(!$this->enabled) {
+            return $response->withStatus(404);
+        }
         $fields = $request->getParsedBody();
 
         $queryParams = $request->getQueryParams();
 
         $exampleConfig = $this->getExampleConfig($queryParams);
 
-        $optionsClass = $this->getOptionsClass($queryParams);
-
-        /** @var \Jerv\Validation\Service\InputFilterService $inputFilterService */
-        $inputFilterService = $this->container->get(
-            InputFilterService::class
-        );
-
-        $result = $inputFilterService->process(
+        $result = $this->inputFilterService->process(
             $fields,
-            $exampleConfig,
-            $optionsClass
+            $exampleConfig
         );
 
         $return = $result->toArray();

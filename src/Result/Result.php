@@ -152,6 +152,13 @@ interface Result extends Stringable, Arrayable
     public function addResult(Result $result);
 
     /**
+     * hasResults
+     *
+     * @return bool
+     */
+    public function hasResults();
+
+    /**
      * setResults
      *
      * @param array $results

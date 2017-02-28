@@ -4,25 +4,16 @@ namespace Jerv\Validation\Processor;
 
 use Jerv\Validation\Exception\ProcessorException;
 use Jerv\Validation\Options\ArrayOptions;
+use Jerv\Validation\Options\Keys;
 use Jerv\Validation\Options\Options;
 use Jerv\Validation\Result\ProcessorResult;
 use Jerv\Validation\ServiceLocator;
 
 /**
- * Class DataSetProcessor
+ * Class FieldSetProcessor
  */
-class DataSetProcessor extends AbstractProcessor implements Processor
+class FieldSetProcessor extends AbstractProcessor implements Processor
 {
-    /**
-     * DEFAULT_CODE
-     */
-    const DEFAULT_CODE = 'dataSetInvalid';
-
-    /**
-     * DEFAULT_CODE
-     */
-    const DEFAULT_MESSAGE = 'Data set is invalid';
-
     /**
      * @var ServiceLocator
      */
@@ -60,8 +51,8 @@ class DataSetProcessor extends AbstractProcessor implements Processor
      */
     public function process($data, Options $options)
     {
-        $name = $options->get('name', 'default');
-        $dataSet = $options->get('dataSet', []);
+        $name = $options->get(Keys::NAME, 'default');
+        $fieldSet = $options->get(Keys::FIELD_SET, []);
         $context = $data;
 
         $results = new ProcessorResult($name, $data, $this, true);
@@ -69,14 +60,15 @@ class DataSetProcessor extends AbstractProcessor implements Processor
         $cleanData = [];
 
         /** @var Processor $processor */
-        foreach ($dataSet as $fieldName => $value) {
+        foreach ($fieldSet as $fieldName => $value) {
 
-            $fieldOption = new ArrayOptions($value);
+            $fieldOption = new ArrayOptions();
+            $fieldOption->setOptions($value);
 
-            $fieldOption->set('context', $context);
-            $fieldOption->set('name', $fieldName);
+            $fieldOption->set(Keys::CONTEXT, $context);
+            $fieldOption->set(Keys::NAME, $fieldName);
 
-            $processorName = $fieldOption->get('processor', null);
+            $processorName = $fieldOption->get(Keys::PROCESSOR, null);
 
             if ($processorName === null) {
                 throw new ProcessorException('Processor not found in options for ' . $fieldName);
@@ -91,9 +83,9 @@ class DataSetProcessor extends AbstractProcessor implements Processor
 
             if (!$result->isValid()) {
                 $results->setError(
-                    self::DEFAULT_CODE,
+                    Processor::DEFAULT_CODE,
                     $options,
-                    self::DEFAULT_MESSAGE
+                    Processor::DEFAULT_MESSAGE
                 );
                 $results->addResult($result);
             }

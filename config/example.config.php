@@ -9,10 +9,10 @@ return [
     /**
      * @example
      */
-    '_DataSetProcessor' => [
+    '_FieldSetProcessor' => [
         'name' => 'setName',
-        'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
-        'dataSet' => [
+        'processor' => Jerv\Validation\Processor\FieldSetProcessor::class,
+        'field-set' => [
             'myField' => [
                 'processor' => '{ProcessorService}',
                 '{ProcessorServiceOptionKey}' => "{ProcessorServiceOptionValue}",
@@ -149,11 +149,11 @@ return [
     /**
      * @example
      */
-    'ZendDataSetProcessor' => [
-        'name' => 'ZendDataSetProcessor',
-        'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
-        'dataSet' => [
-            'myField' => [
+    'FieldSetProcessor' => [
+        'name' => 'FieldSetProcessor',
+        'processor' => Jerv\Validation\Processor\FieldSetProcessor::class,
+        'field-set' => [
+            'field1' => [
                 'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
                 'processors' => [
                     [
@@ -188,7 +188,7 @@ return [
                     ],
                 ],
             ],
-            'yourField' => [
+            'field2' => [
                 'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
                 'processors' => [
                     [
@@ -213,11 +213,11 @@ return [
                     ],
                 ],
             ],
-            'subset' => [
-                'name' => 'subset',
-                'processor' => Jerv\Validation\Processor\DataSetProcessor::class,
-                'dataSet' => [
-                    'myField' => [
+            'sub-set1' => [
+                'name' => 'sub-set1',
+                'processor' => Jerv\Validation\Processor\FieldSetProcessor::class,
+                'field-set' => [
+                    'field11' => [
                         'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
                         'processors' => [
                             [
@@ -226,12 +226,36 @@ return [
                             ],
                         ],
                     ],
-                    'yourField' => [
+                    'field12' => [
                         'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
                         'processors' => [
                             [
                                 'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
                                 'zendValidator' => Zend\Validator\NotEmpty::class,
+                            ],
+                        ],
+                    ],
+                    'sub-set2' => [
+                        'name' => 'sub-set2',
+                        'processor' => Jerv\Validation\Processor\FieldSetProcessor::class,
+                        'field-set' => [
+                            'field111' => [
+                                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                                'processors' => [
+                                    [
+                                        'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                                        'zendValidator' => Zend\Validator\NotEmpty::class,
+                                    ],
+                                ],
+                            ],
+                            'field112' => [
+                                'processor' => Jerv\Validation\Processor\ProcessorCollection::class,
+                                'processors' => [
+                                    [
+                                        'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                                        'zendValidator' => Zend\Validator\NotEmpty::class,
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -240,104 +264,117 @@ return [
         ],
         // message over-ride
         'messages' => [
-            'dataSetInvalid' => 'Set failed!',
+            'field-setInvalid' => 'Set failed!',
         ],
     ],
     /**
-     * @SimpleConfigFormat
+     * @FlatConfigFormat
      */
     /*
-    'SimpleConfigFormat2' => [
-        '_messages' => ['{DataSetProcessorMessages}']
+    'FlatConfigFormat2' => [
+        '_messages' => ['{FieldSetProcessorMessages}']
         '{field-name}' => [
             ['{ProcessorCollectionConfig}'],
         ],
         '{field-name}._messages' => ['{ProcessorCollectionMessages}'],
     ],
     */
-    'SimpleConfigFormat' => [
-        '_messages' => [
-            'dataSetInvalid' => 'Root bad!',
+    'FlatConfigFormat' => [
+        'options-class' => \Jerv\Validation\Options\FlatOptions::class,
+        'result-parser-class' => \Jerv\Validation\ResultParser\FlatMessagesResultParser::class,
+        'messages' => [
+            'field-setInvalid' => 'Field set is invalid!',
         ],
-        'field1' => [
-            [
-                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
-                'zendFilter' => Zend\Filter\StripTags::class,
-                'zendFilterOptions' => [
-                    'tagsAllowed' => ['br']
+        'field-set' => [
+            'field1' => [
+                [
+                    'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                    'zendFilter' => Zend\Filter\StripTags::class,
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => ['br']
+                    ],
                 ],
             ],
-        ],
-        'field2' => [
-            [
-                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
-                'zendValidator' => Zend\Validator\StringLength::class,
-                'zendValidatorOptions' => [
-                    'min' => 2,
-                    'max' => 4,
+            'field2' => [
+                [
+                    'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                    'zendValidator' => Zend\Validator\StringLength::class,
+                    'zendValidatorOptions' => [
+                        'min' => 2,
+                        'max' => 4,
+                    ],
+                    'messages' => [
+                        'invalid' => 'Not even close!',
+                        'stringLengthTooShort' => 'Tooo short dude!',
+                        'stringLengthTooLong' => 'Tooo long man!',
+                    ],
                 ],
-                'messages' => [
-                    'invalid' => 'Not even close!',
-                    'stringLengthTooShort' => 'Tooo short dude!',
-                    'stringLengthTooLong' => 'Tooo long man!',
-                ],
-            ],
-            [
-                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
-                'zendValidator' => Zend\Validator\NotEmpty::class,
-                'zendValidatorOptions' => [
-                    'type' => 'all',
-                ],
-                'messages' => [
-                    \Zend\Validator\NotEmpty::IS_EMPTY => 'Value must not be empty',
-                ],
-            ],
-        ],
-        'set.field11' => [
-            [
-                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
-                'zendValidator' => Zend\Validator\StringLength::class,
-                'zendValidatorOptions' => [
-                    'min' => 2,
-                    'max' => 4,
-                ],
-                'messages' => [
-                    'invalid' => 'Not even close!',
-                    'stringLengthTooShort' => 'Tooo short dude!',
-                    'stringLengthTooLong' => 'Tooo long man!',
+                [
+                    'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                    'zendValidator' => Zend\Validator\NotEmpty::class,
+                    'zendValidatorOptions' => [
+                        'type' => 'all',
+                    ],
+                    'messages' => [
+                        \Zend\Validator\NotEmpty::IS_EMPTY => 'Value must not be empty',
+                    ],
                 ],
             ],
-            [
-                'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
-                'zendValidator' => Zend\Validator\NotEmpty::class,
-                'zendValidatorOptions' => [
-                    'type' => 'all',
+            'sub-set1.field11' => [
+                [
+                    'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                    'zendValidator' => Zend\Validator\StringLength::class,
+                    'zendValidatorOptions' => [
+                        'min' => 2,
+                        'max' => 4,
+                    ],
+                    'messages' => [
+                        'invalid' => 'Not even close!',
+                        'stringLengthTooShort' => 'Tooo short dude!',
+                        'stringLengthTooLong' => 'Tooo long man!',
+                    ],
                 ],
-                'messages' => [
-                    \Zend\Validator\NotEmpty::IS_EMPTY => 'Value must not be empty',
-                ],
-            ],
-        ],
-        'set.field12' => [
-            [
-                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
-                'zendFilter' => Zend\Filter\StripTags::class,
-                'zendFilterOptions' => [
-                    'tagsAllowed' => ['br']
-                ],
-            ],
-        ],
-        'set.set1.field12' => [
-            [
-                'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
-                'zendFilter' => Zend\Filter\StripTags::class,
-                'zendFilterOptions' => [
-                    'tagsAllowed' => ['br']
+                [
+                    'processor' => Jerv\Validation\Zend\Validator\Adapter::class,
+                    'zendValidator' => Zend\Validator\NotEmpty::class,
+                    'zendValidatorOptions' => [
+                        'type' => 'all',
+                    ],
+                    'messages' => [
+                        \Zend\Validator\NotEmpty::IS_EMPTY => 'Value must not be empty',
+                    ],
                 ],
             ],
-        ],
-        'set.set1.field12._messages' => [
-            'dataSetInvalid' => 'set bad!',
+            'sub-set1.field12' => [
+                [
+                    'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                    'zendFilter' => Zend\Filter\StripTags::class,
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => ['br']
+                    ],
+                ],
+            ],
+            'sub-set1.sub-set2.field111' => [
+                [
+                    'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                    'zendFilter' => Zend\Filter\StripTags::class,
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => ['br']
+                    ],
+                ],
+            ],
+            'sub-set1.sub-set2.field111._messages' => [
+                'field-setInvalid' => 'set bad!',
+            ],
+            'sub-set1.sub-set2.field112' => [
+                [
+                    'processor' => Jerv\Validation\Zend\Filter\Adapter::class,
+                    'zendFilter' => Zend\Filter\StripTags::class,
+                    'zendFilterOptions' => [
+                        'tagsAllowed' => ['br']
+                    ],
+                ],
+            ],
         ],
     ],
 ];

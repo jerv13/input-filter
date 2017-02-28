@@ -3,6 +3,7 @@
 namespace Jerv\Validation\Processor;
 
 use Jerv\Validation\Exception\ProcessorException;
+use Jerv\Validation\Options\Keys;
 use Jerv\Validation\Options\Options;
 use Jerv\Validation\Result\ProcessorResult;
 use Jerv\Validation\ServiceLocator;
@@ -12,16 +13,6 @@ use Jerv\Validation\ServiceLocator;
  */
 class ProcessorCollection extends AbstractProcessor implements Processor
 {
-    /**
-     * DEFAULT_CODE
-     */
-    const DEFAULT_CODE = 'validationFailedForOneOrMoreProcessors';
-
-    /**
-     * DEFAULT_CODE
-     */
-    const DEFAULT_MESSAGE = 'Data is invalid';
-
     /**
      * @var ServiceLocator
      */
@@ -60,8 +51,8 @@ class ProcessorCollection extends AbstractProcessor implements Processor
         $data,
         Options $options
     ) {
-        $name = $options->get('name', 'default');
-        $processors = $options->get('processors', []);
+        $name = $options->get(Keys::NAME, 'default');
+        $processors = $options->get(Keys::PROCESSORS, []);
 
         if (empty($processors)) {
             throw new ProcessorException('Processors not found in options');
@@ -73,7 +64,7 @@ class ProcessorCollection extends AbstractProcessor implements Processor
             $processorOptions = $options->createOptions($processorOptionsArray);
 
             $processorServiceName = $processorOptions->get(
-                'processor',
+                Keys::PROCESSOR,
                 null
             );
 
@@ -85,7 +76,7 @@ class ProcessorCollection extends AbstractProcessor implements Processor
             $processor = $this->getProcessor($processorServiceName);
 
             // over-ride name
-            $processorOptions->set('name', $name);
+            $processorOptions->set(Keys::NAME, $name);
 
             $result = $processor->process($data, $processorOptions);
 
@@ -93,10 +84,6 @@ class ProcessorCollection extends AbstractProcessor implements Processor
 
             if (!$result->isValid()) {
                 $results->setValid(false);
-//                    self::DEFAULT_CODE,
-//                    $options,
-//                    self::DEFAULT_MESSAGE
-//                );
                 foreach ($result->getMessages() as $code => $message) {
                     $results->setMessage($code, $message);
                 }

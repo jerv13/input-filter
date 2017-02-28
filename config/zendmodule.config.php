@@ -24,29 +24,7 @@ return [
         ],
     ],
     /* Zend Service Manager */
-    'service_manager' => [
-        'factories' => [
-            /* ServiceLocator */
-            Jerv\Validation\ServiceLocator::class
-            => Jerv\Validation\Zend\ServiceManager\AdapterFactory::class,
-            /* InputFilterService */
-            Jerv\Validation\Service\InputFilterService::class
-            => Jerv\Validation\Service\InputFilterServiceFactory::class,
-            /* Processors */
-            Jerv\Validation\Processor\DataSetProcessor::class
-            => Jerv\Validation\Processor\DataSetProcessorFactory::class,
-            Jerv\Validation\Processor\ProcessorCollection::class
-            => Jerv\Validation\Processor\ProcessorCollectionFactory::class,
-            /* Zend Processor Adapters */
-            Jerv\Validation\Zend\Filter\Adapter::class
-            => Jerv\Validation\Zend\Filter\AdapterFactory::class,
-            Jerv\Validation\Zend\Validator\Adapter::class
-            => Jerv\Validation\Zend\Validator\AdapterFactory::class,
-            /* Result Parsers */
-            Jerv\Validation\ResultParser\DefaultResultParser::class
-            => Jerv\Validation\ResultParser\DefaultResultParserFactory::class
-        ]
-    ],
+    'service_manager' => include __DIR__ . '/dependencies.config.php',
     /* View Manager */
     'view_manager' => [
         'strategies' => [

@@ -62,4 +62,13 @@ interface Options
      * @return Options
      */
     public function createOptions(array $optionsData);
+
+    /**
+     * toArray
+     *
+     * @param array $ignore
+     *
+     * @return array
+     */
+    public function toArray($ignore = []);
 }

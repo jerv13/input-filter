@@ -3,6 +3,7 @@
 namespace Jerv\Validation\Middleware;
 
 use Interop\Container\ContainerInterface;
+use Jerv\Validation\Service\InputFilterService;
 
 /**
  * Class ExampleControllerFactory
@@ -22,6 +23,9 @@ class ExampleControllerFactory
      */
     public function __invoke($container)
     {
-        return new ExampleController($container);
+        return new ExampleController(
+            $container->get('config'),
+            $container->get(InputFilterService::class)
+        );
     }
 }

@@ -32,7 +32,8 @@ class ParamMessageResultParser implements ResultParser
             return $result;
         }
 
-        $messageParamOptions = new ArrayOptions($messageParams);
+        $messageParamOptions = new ArrayOptions();
+        $messageParamOptions->setOptions($messageParams);
 
         $messages = $result->getMessages();
 
@@ -53,7 +54,7 @@ class ParamMessageResultParser implements ResultParser
      * buildMessage
      *
      * @param string $message
-     * @param array $params
+     * @param array  $params
      *
      * @return string
      */

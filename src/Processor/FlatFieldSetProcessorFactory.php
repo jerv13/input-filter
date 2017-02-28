@@ -6,22 +6,22 @@ use Jerv\Validation\ServiceLocator;
 use Psr\Container\ContainerInterface;
 
 /**
- * Class DataSetProcessorFactory
+ * Class FlatFieldSetProcessorFactory
  */
-class DataSetProcessorFactory
+class FlatFieldSetProcessorFactory
 {
     /**
      * createService
      *
      * @param ContainerInterface $container
      *
-     * @return DataSetProcessor
+     * @return FlatFieldSetProcessor
      */
     public function __invoke($container)
     {
         /** @var ServiceLocator $serviceLocator */
         $serviceLocator = $container->get(ServiceLocator::class);
 
-        return new DataSetProcessor($serviceLocator);
+        return new FlatFieldSetProcessor($serviceLocator);
     }
 }

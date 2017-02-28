@@ -2,15 +2,19 @@
 
 namespace Jerv\Validation\Options;
 
-use Jerv\Validation\Processor\DataSetFlatProcessor;
+use Jerv\Validation\Exception\OptionsException;
+use Jerv\Validation\Processor\FlatFieldSetProcessor;
 use Jerv\Validation\Processor\ProcessorCollection;
+use Jerv\Validation\ResultParser\FlatMessagesResultParser;
 
 /**
  * Class FlatOptions
  */
 class FlatOptions extends ArrayOptions
 {
-    protected $dataSetProcessorName = DataSetFlatProcessor::class;
+    protected $fieldSetProcessorName = FlatFieldSetProcessor::class;
+
+    protected $resultParserClass = FlatMessagesResultParser::class;
 
     protected $processorCollectionName = ProcessorCollection::class;
 
@@ -34,28 +38,46 @@ class FlatOptions extends ArrayOptions
     }
 
     /**
-     * buildFlatOptionsTest
+     * buildFlatOptions
      *
      * @param array $optionsData
      *
      * @return array
+     * @throws OptionsException
      */
     protected function buildFlatOptions(array $optionsData)
     {
+        $optionsPre = new ArrayOptions();
+        $optionsPre->setOptions($optionsData);
+
         $options = [
-            Keys::NAME => 'field-set',
-            Keys::PROCESSOR => $this->dataSetProcessorName,
-            Keys::DATA_SET => [],
-            Keys::MESSAGES => $this->getMessages($optionsData)
+            Keys::NAME => $optionsPre->get(Keys::NAME, 'field-set'),
+            Keys::FIELD_SET => [],
+            Keys::MESSAGES => $optionsPre->get(Keys::MESSAGES, []),
         ];
 
-        foreach ($optionsData as $fieldPath => $processorData) {
+        $options[Keys::PROCESSOR] = $optionsPre->get(
+            Keys::PROCESSOR,
+            $this->fieldSetProcessorName
+        );
+
+        $options[Keys::RESULT_PARSER_CLASS] = $optionsPre->get(
+            Keys::RESULT_PARSER_CLASS,
+            $this->resultParserClass
+        );
+
+        $fieldSetPre = $optionsPre->get(
+            Keys::FIELD_SET,
+            []
+        );
+
+        foreach ($fieldSetPre as $fieldPath => $processorData) {
 
             if ($this->isMessagesPath($fieldPath)) {
                 continue;
             }
 
-            $options[Keys::DATA_SET][$fieldPath] = [
+            $options[Keys::FIELD_SET][$fieldPath] = [
                 Keys::NAME => $fieldPath,
                 Keys::PROCESSOR => $this->processorCollectionName,
                 Keys::PROCESSORS => $processorData,
@@ -63,15 +85,15 @@ class FlatOptions extends ArrayOptions
             ];
         }
 
-        $optionsDataSet = [];
+        $optionsFieldSet = [];
 
-        foreach ($options[Keys::DATA_SET] as $fieldPath => $processorData) {
+        foreach ($options[Keys::FIELD_SET] as $fieldPath => $processorData) {
             if (!$this->isMessagesPath($fieldPath)) {
-                $optionsDataSet[$fieldPath] = $processorData;
+                $optionsFieldSet[$fieldPath] = $processorData;
             }
         }
 
-        $options[Keys::DATA_SET] = $optionsDataSet;
+        $options[Keys::FIELD_SET] = $optionsFieldSet;
 
         return $options;
     }
@@ -90,22 +112,6 @@ class FlatOptions extends ArrayOptions
 
         if (array_key_exists($messagesFieldPath, $optionsData)) {
             return $optionsData[$messagesFieldPath];
-        }
-
-        return [];
-    }
-
-    /**
-     * getMessages
-     *
-     * @param $optionsData
-     *
-     * @return array
-     */
-    protected function getMessages(array $optionsData)
-    {
-        if (array_key_exists(Keys::MESSAGES_RESERVED, $optionsData)) {
-            return $optionsData[Keys::MESSAGES_RESERVED];
         }
 
         return [];

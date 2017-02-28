@@ -13,14 +13,6 @@ class ArrayOptions implements Options
     protected $options = [];
 
     /**
-     * @param array $options
-     */
-    public function __construct($options = [])
-    {
-        $this->setOptions($options);
-    }
-
-    /**
      * set
      *
      * @param $key
@@ -97,7 +89,10 @@ class ArrayOptions implements Options
      */
     public function createOptions(array $optionsData)
     {
-        return new ArrayOptions($optionsData);
+        $options = new ArrayOptions();
+        $options->setOptions($optionsData);
+
+        return $options;
     }
 
     /**

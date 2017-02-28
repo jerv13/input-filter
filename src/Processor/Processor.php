@@ -11,6 +11,16 @@ use Jerv\Validation\Result\Result;
 interface Processor
 {
     /**
+     * DEFAULT_CODE
+     */
+    const DEFAULT_CODE = 'invalid';
+
+    /**
+     * DEFAULT_CODE
+     */
+    const DEFAULT_MESSAGE = 'Data is invalid';
+
+    /**
      * process Filter and/or Validate
      *
      * @param mixed   $data

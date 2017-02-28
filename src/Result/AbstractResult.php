@@ -227,7 +227,7 @@ abstract class AbstractResult implements Result
      */
     public function setMessages(array $messages)
     {
-        $this->results = [];
+        $this->messages = [];
         foreach ($messages as $code => $message) {
             $this->setMessage($code, $message);
         }
@@ -308,7 +308,19 @@ abstract class AbstractResult implements Result
     }
 
     /**
+     * hasResults
+     *
+     * @return bool
+     */
+    public function hasResults()
+    {
+        return !empty($this->results);
+    }
+
+    /**
      * setResults
+     *
+     * @param array $results
      *
      * @return void
      */

@@ -2,13 +2,15 @@
 
 namespace Jerv\Validation\Service;
 
+use Jerv\Validation\Exception\ServiceException;
+use Jerv\Validation\Options\ArrayOptions;
+use Jerv\Validation\Options\Keys;
 use Jerv\Validation\Options\Options;
+use Jerv\Validation\Processor\FieldSetProcessor;
 use Jerv\Validation\Processor\Processor;
 use Jerv\Validation\Result\Result;
-use Jerv\Validation\ServiceLocator;
-use Jerv\Validation\Options\ArrayOptions;
-use Jerv\Validation\Processor\DataSetProcessor;
 use Jerv\Validation\ResultParser\DefaultResultParser;
+use Jerv\Validation\ServiceLocator;
 
 /**
  * Class InputFilterService
@@ -46,30 +48,30 @@ class InputFilterService
     /**
      * process Data
      *
-     * @param mixed  $data
-     * @param array  $optionsArray
-     * @param string $optionClass
+     * @param mixed $data
+     * @param array $optionsArray
      *
      * @return Result
      */
     public function process(
         $data,
-        array $optionsArray,
-        $optionClass = ArrayOptions::class
+        array $optionsArray
     ) {
-        $options = $this->buildOptions($optionsArray, $optionClass);
+        $options = $this->buildOptions($optionsArray);
 
         $serviceName = $options->get(
-            'processor',
-            DataSetProcessor::class
+            Keys::PROCESSOR,
+            FieldSetProcessor::class
         );
+
+
 
         $service = $this->getService($serviceName);
 
         $result = $service->process($data, $options);
 
         $resultParserService = $options->get(
-            'resultParser',
+            Keys::RESULT_PARSER_CLASS,
             DefaultResultParser::class
         );
 
@@ -79,18 +81,27 @@ class InputFilterService
     /**
      * buildOptions
      *
-     * @param array  $optionsArray
-     * @param string $optionClass
+     * @param array $optionsArray
      *
      * @return Options
+     * @throws ServiceException
      */
     public function buildOptions(
-        array $optionsArray,
-        $optionClass = '\Jerv\Validation\Options\ArrayOptions'
+        array $optionsArray
     ) {
+        $optionClass = ArrayOptions::class;
+        if (array_key_exists(Keys::OPTIONS_CLASS, $optionsArray)) {
+            $optionClass = $optionsArray[Keys::OPTIONS_CLASS];
+        }
+
+        if (!class_exists($optionClass)) {
+            throw new ServiceException('Class does not exist: ' . $optionClass);
+        }
+
         /** @var Options $options */
         $options = new $optionClass();
         $options->setOptions($optionsArray);
+
         return $options;
     }
 
