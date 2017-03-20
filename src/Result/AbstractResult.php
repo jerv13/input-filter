@@ -46,8 +46,12 @@ abstract class AbstractResult implements Result
     protected $results = [];
 
     /**
+     * Constructor.
+     *
      * @param           $name
-     * @param bool|true $valid
+     * @param           $rawValue
+     * @param Processor $processor
+     * @param bool      $valid
      */
     public function __construct(
         $name,

@@ -64,8 +64,6 @@ class InputFilterService
             FieldSetProcessor::class
         );
 
-
-
         $service = $this->getService($serviceName);
 
         $result = $service->process($data, $options);
